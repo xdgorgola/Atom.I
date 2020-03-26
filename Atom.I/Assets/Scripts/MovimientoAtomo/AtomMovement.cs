@@ -2,22 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(AtomMouseFollower))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(MouseFollower))]
 public class AtomMovement : MonoBehaviour
 {
+    // Componentes
     private Rigidbody2D rb2d = null;
     private Collider2D coll2d = null;
-    private AtomMouseFollower amf = null;
+    private MouseFollower amf = null;
 
-    [SerializeField]
-    private Vector2 initialDirection = Vector2.one;
+    /// <summary>
+    /// Direccion inicial del atomo
+    /// </summary>
+    public Vector2 initialDirection = Vector2.one;
+    /// <summary>
+    /// Rapidez del atomo (tambien es inicial)
+    /// </summary>
     [SerializeField]
     private float speed = 5f;
 
+    // No se si usarre estas dos cosas
     private Vector2 velocityPreDrag;
     private float speedPreDrag = 5f;
 
     //19-21 de speed ya es fastidioso :(
+
 
     private void Awake()
     {
@@ -31,21 +39,27 @@ public class AtomMovement : MonoBehaviour
         coll2d = GetComponent<Collider2D>();
         coll2d.isTrigger = false;
 
-        amf = GetComponent<AtomMouseFollower>();
+        amf = GetComponent<MouseFollower>();
     }
+
 
     // Start is called before the first frame update
     void Start()
     {
+        // Eventos de velocidad
         if (SpeedManager.Manager != null)
         {
             SpeedManager.Manager.onStrictSpeedChange.AddListener(ChangeSpeed);
             SpeedManager.Manager.onAddSpeed.AddListener(AddSpeed);
         }
         rb2d.velocity = initialDirection.normalized * speed;
-        // Igualmente deberiamos rotar los centros y eso
     }
 
+
+    /// <summary>
+    /// Cambia la rapidez totalmente del atomo
+    /// </summary>
+    /// <param name="newSpeed">Nueva rapidez del atomo</param>
     private void ChangeSpeed(float newSpeed)
     {
         rb2d.velocity = rb2d.velocity.normalized * newSpeed;
@@ -53,6 +67,11 @@ public class AtomMovement : MonoBehaviour
         Debug.Log("New Speed: " + speed);
     }
 
+
+    /// <summary>
+    /// Aumenta la rapidez del atomo una cantidad fija
+    /// </summary>
+    /// <param name="toAdd">Cantidad a aumentar</param>
     private void AddSpeed(float toAdd)
     {
         rb2d.velocity = rb2d.velocity.normalized * (speed + toAdd);
@@ -60,6 +79,11 @@ public class AtomMovement : MonoBehaviour
         Debug.Log("New Speed: " + speed);
     }
 
+
+    /// <summary>
+    /// Activa el dragging del atomo, desactivando su simulacion de rb2d,
+    /// movimiento y activa el seguimiento del mouse.
+    /// </summary>
     public void StartDragging()
     {
         speedPreDrag = speed;
@@ -72,6 +96,11 @@ public class AtomMovement : MonoBehaviour
         amf.SetMFStatus(true);
     }
 
+
+    /// <summary>
+    /// Desactiva el dragging del atomo, activa su simulacion de rb2d,
+    /// movimiento y desactiva el seguimiento del mouse.
+    /// </summary>
     public void StopDragging()
     {
         // quizas aca chequear donde lo deje!

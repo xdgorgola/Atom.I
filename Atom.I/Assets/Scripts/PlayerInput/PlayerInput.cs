@@ -2,38 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerState { Box, NotDraggin, Drag }
-
-
 public class PlayerInput : MonoBehaviour
 {
-    private PlayerState state = PlayerState.Box;
-
     private GameObject draggedAtom = null;
 
+    public float scrollScale = 0.6f;
 
-    private void Start()
-    {
-        // esto es pa probar
-        state = PlayerState.Drag;
-    }
+    private Vector2 startCorner = Vector2.zero;
+    private Vector2 endCorner = Vector2.zero;
+
+    public RayBox box;
+
     private void Update()
     {
-        switch (state)
-        {
-            case PlayerState.Box:
-                break;
-            case PlayerState.Drag:
-                ClickInput();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void BoxInput()
-    {
-
+        ClickInput();
+        WheelInput();
     }
 
     private void ClickInput()
@@ -41,6 +24,7 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // Solo la layer atomo
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 0.1f, 1 << 8);
             if (hit)
             {
@@ -51,6 +35,20 @@ public class PlayerInput : MonoBehaviour
         {
             draggedAtom.GetComponent<AtomMovement>().StopDragging();
             draggedAtom = null;
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            box.ShootBox();
+        }
+    }
+
+    private void WheelInput()
+    {
+        float delta = Input.mouseScrollDelta.y;
+        if (delta != 0)
+        {
+            // Multiplicar por Time.deltaTime?
+            box.ScaleBox(delta * scrollScale);
         }
     }
 
