@@ -10,9 +10,10 @@ public class BoxAtomContainer : MonoBehaviour
     // Componentes
     private RayBox box = null;
 
-    private Vector2 min = Vector2.zero;
-    private Vector2 max = Vector2.zero;
+    private Vector2 cornerTL;
+    private Vector2 cornerBR;
 
+   [SerializeField]
     private float isolationTime = 4f;
     private float remainingTime = 4f;
 
@@ -43,6 +44,11 @@ public class BoxAtomContainer : MonoBehaviour
         box.onBoxShoot.AddListener(CaptureAtomsInBox);
     }
 
+    private void Start()
+    {
+        remainingTime = isolationTime;    
+    }
+
     private void Update()
     {
         if (!isIsolating) return;
@@ -56,11 +62,8 @@ public class BoxAtomContainer : MonoBehaviour
 
     public void CaptureAtomsInBox()
     {
-        min = box.min;
-        max = box.max;
-
-        Vector2 cornerTL = (Vector2)transform.position + Vector2.up * box.max.y + Vector2.right * box.min.x;
-        Vector2 cornerBR = (Vector2)transform.position + Vector2.up * box.min.y + Vector2.right * box.max.x;
+        cornerTL = (Vector2)transform.position + Vector2.up * box.max.y + Vector2.right * box.min.x;
+        cornerBR = (Vector2)transform.position + Vector2.up * box.min.y + Vector2.right * box.max.x;
 
         Debug.DrawLine(cornerTL, cornerBR, Color.black, 4);
         Debug.Log(cornerTL);
@@ -80,8 +83,9 @@ public class BoxAtomContainer : MonoBehaviour
 
     public void ProcessDraggedAtom(GameObject atom)
     {
-        if (!atomsInside.Contains(atom) || CheckIfIsOut(atom) || !isIsolating) return;
+        if (!atomsInside.Contains(atom) || !CheckIfIsOut(atom) || !isIsolating) return;
         Debug.Log("Lo drageaste afuera!!");
+        atom.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
         atomsInside.Remove(atom);
         if (atomsInside.Count == 1)
         {
@@ -96,11 +100,15 @@ public class BoxAtomContainer : MonoBehaviour
         // acitvar una animacion y desactivarlo luego a la pool!
         // Mandar como score atomsCount y remainingTime (mientras mayor sea remainingTime, mejor!)
         // pendiente que si es 1 el atomsCount, no deberia tener tanto score
+        remainingTime = isolationTime;
         isIsolating = false;
+
         GameObject isolated = atomsInside[0];
+        isolated.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
         // de mientras
         isolated.SetActive(false);
         atomsInside.Clear();
+
         onAtomIsolated.Invoke(isolated);
         onSucessfullIsolation.Invoke();
     }
@@ -109,20 +117,22 @@ public class BoxAtomContainer : MonoBehaviour
     public void FailIsolation()
     {
         Debug.Log("pajuo fallaste");
-
+        remainingTime = isolationTime;
         isIsolating = false;
+
+        foreach (AtomMovement atom in atomsInside.Select(a=> a.GetComponent<AtomMovement>()))
+        {
+            atom.onAtomDragged.RemoveListener(ProcessDraggedAtom);
+        }
         atomsInside.Clear();
         atomsCount = 0;
+
         onFailedIsolation.Invoke();
     }
 
     public bool CheckIfIsOut(GameObject atom)
     {
         Vector2 atomPos = atom.transform.position;
-        if (atomPos.x > min.x && atomPos.x < max.x)
-        {
-            return atomPos.y > min.y && atomPos.y < max.y;
-        }
-        return false;
+        return (atomPos.x < cornerTL.x || atomPos.x > cornerBR.x || atomPos.y < cornerBR.y || atomPos.y > cornerTL.y);
     }
 }

@@ -33,6 +33,7 @@ public class PlayerInput : MonoBehaviour
             draggedAtom.GetComponent<AtomMovement>().StopDragging();
             draggedAtom = null;
         }
+        // Se puede repetir, bloquear
         else if (Input.GetMouseButtonDown(1))
         {
             box.ShootBox();
