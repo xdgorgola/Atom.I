@@ -4,11 +4,13 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(MouseFollower))]
+[RequireComponent(typeof(MouseFollower), typeof(BoxAtomContainer))]
 public class RayBox : MonoBehaviour
 {
     // Componentes
     private MouseFollower mf = null;
+    private BoxAtomContainer ct = null;
+
 
     /// <summary>
     /// Half Size maximo de la caja
@@ -25,9 +27,6 @@ public class RayBox : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float halfSize = 4f;
-
-    [SerializeField]
-    private float boxTime = 4f;
 
     // NOTA: PODRIAMOS USAR UN BOUNDING BOX DE UNITY QUE YA VIENE CON
     // POINT IS INSIDE.
@@ -54,6 +53,8 @@ public class RayBox : MonoBehaviour
     {
         mf = GetComponent<MouseFollower>();
         mf.SetDamp(false);
+
+        ct = GetComponent<BoxAtomContainer>();
     }
 
 
@@ -71,6 +72,10 @@ public class RayBox : MonoBehaviour
             walls.Add(coll);
         }
         SetWallsStatus(false);
+
+        // Eventos para activar movimiento
+        ct.onSucessfullIsolation.AddListener(ActivateMovementAgain);
+        ct.onFailedIsolation.AddListener(ActivateMovementAgain);
     }
 
 
@@ -103,6 +108,11 @@ public class RayBox : MonoBehaviour
         onBoxShoot.Invoke();
     }
 
+    public void ActivateMovementAgain()
+    {
+        mf.SetMFStatus(true);
+        SetWallsStatus(false);
+    }
 
     public void SetWallsStatus(bool status)
     {

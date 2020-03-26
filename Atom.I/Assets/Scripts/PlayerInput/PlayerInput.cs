@@ -8,9 +8,6 @@ public class PlayerInput : MonoBehaviour
 
     public float scrollScale = 0.6f;
 
-    private Vector2 startCorner = Vector2.zero;
-    private Vector2 endCorner = Vector2.zero;
-
     public RayBox box;
 
     private void Update()

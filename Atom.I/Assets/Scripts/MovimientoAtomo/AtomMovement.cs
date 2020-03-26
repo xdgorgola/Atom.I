@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public class AtomEvent : UnityEvent<GameObject> { }
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(MouseFollower))]
 public class AtomMovement : MonoBehaviour
@@ -23,6 +26,8 @@ public class AtomMovement : MonoBehaviour
     // No se si usarre estas dos cosas
     private Vector2 velocityPreDrag;
     private float speedPreDrag = 5f;
+
+    public AtomEvent onAtomDragged = new AtomEvent();
 
     //19-21 de speed ya es fastidioso :(
 
@@ -112,5 +117,7 @@ public class AtomMovement : MonoBehaviour
         rb2d.simulated = true;
 
         amf.SetMFStatus(false);
+
+        onAtomDragged.Invoke(gameObject);
     }
 }
