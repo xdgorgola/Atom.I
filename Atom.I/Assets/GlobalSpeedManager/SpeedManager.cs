@@ -10,9 +10,14 @@ public class SpeedManager : MonoBehaviour
     public static SpeedManager Manager { get; private set; }
 
     [SerializeField]
-    private float lastStrictSpeed = 5;
+    private float speedRangeMin = 5f;
     [SerializeField]
-    private float lastAddSpeed = 2;
+    private float speedRangeMax = 6f;
+
+    [SerializeField]
+    private float lastStrictSpeed = 5f;
+    [SerializeField]
+    private float lastAddSpeed = 2f;
 
     public SpeedEvent onStrictSpeedChange = new SpeedEvent();
     public SpeedEvent onAddSpeed = new SpeedEvent();
@@ -52,5 +57,10 @@ public class SpeedManager : MonoBehaviour
     {
         lastAddSpeed = toAdd;
         onAddSpeed.Invoke(toAdd);
+    }
+
+    public float GetSpeedRange()
+    {
+        return Random.Range(speedRangeMin, speedRangeMax);
     }
 }

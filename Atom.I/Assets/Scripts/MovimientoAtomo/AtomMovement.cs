@@ -60,6 +60,13 @@ public class AtomMovement : MonoBehaviour
         rb2d.velocity = initialDirection.normalized * speed;
     }
 
+    public void InitializeAtom(Vector2 direction, float speed)
+    {
+        initialDirection = direction.normalized;
+        this.speed = speed;
+        rb2d.velocity = direction.normalized * speed;
+        gameObject.SetActive(true);
+    }
 
     /// <summary>
     /// Cambia la rapidez totalmente del atomo

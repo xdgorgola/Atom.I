@@ -17,8 +17,14 @@ public class AtomSpawner : MonoBehaviour
 
     private void Start()
     {
+        activeAtoms = new List<GameObject>(maxAtoms);
+
+        // Settear la camara aca por si acaso
+        //Camera.main.GetComponent<CameraSizeSetter>().SetCameraSize(10, 10);
+
         h = Camera.main.orthographicSize * 2;
         w = ((float)Screen.width / (float)Screen.height) * h;
+        InitialSpawn();
     }
 
 
@@ -28,6 +34,9 @@ public class AtomSpawner : MonoBehaviour
         {
             GameObject spawned = AtomPool.FreeAtom;
             activeAtoms.Add(spawned);
+            spawned.transform.position = Vector2.right * Random.Range(-1f, 1f) * (w / 2) + Vector2.up * Random.Range(-1f, 1f) * (h / 2);
+            Vector2 direction = Random.insideUnitCircle.normalized;
+            spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
         }
     }
 

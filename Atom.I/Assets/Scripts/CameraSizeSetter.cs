@@ -8,8 +8,20 @@ public class CameraSizeSetter : MonoBehaviour
     public float x = 10;
     public float y = 10;
 
-    void Update()
+#if UNITY_EDITOR
+    public bool debug = true;
+
+    private void Update()
     {
+        if (!debug) return;
+        SetCameraSize(x, y);
+    }
+#endif
+
+    public void SetCameraSize(float newX, float newY)
+    {
+        x = newX;
+        y = newY;
         float screenRatio = (float)Screen.width / (float)Screen.height; // Que tanto X hay por cada Y actualmente
         float targetRatio = x / y; // Que tanto X quiero que haya por Y
 
