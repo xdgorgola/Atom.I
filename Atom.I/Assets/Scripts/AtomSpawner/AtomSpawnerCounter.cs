@@ -7,7 +7,7 @@ public class AtomSpawnerCounter : MonoBehaviour
 {
     public static AtomSpawnerCounter Manager { get; private set; }
 
-    public BoxAtomContainer container; 
+    public BoxAtomContainer container;
 
     private float w;
     private float h;
@@ -30,6 +30,7 @@ public class AtomSpawnerCounter : MonoBehaviour
         if (Manager != null && Manager != this)
         {
             Debug.LogWarning("Ya hay un AtomSpawnerCounter, eliminando este...", gameObject);
+            Destroy(gameObject);
         }
         Manager = this;
 

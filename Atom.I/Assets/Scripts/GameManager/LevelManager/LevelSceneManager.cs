@@ -3,6 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class LevelSceneManager : MonoBehaviour
 {
+    public static LevelSceneManager Manager { get; private set; }
+
+    private void Awake()
+    {
+        if (Manager != null && Manager != this)
+        {
+            Debug.LogWarning("Ya hay un LevenSceneManager, borrando este...", gameObject);
+            Destroy(gameObject);
+        }
+        Manager = this;
+    }
+
+
     /// <summary>
     /// Carga el menu principal
     /// </summary>
