@@ -39,7 +39,7 @@ public class AtomSpawner : MonoBehaviour
         {
             GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Atom);
             activeAtoms.Add(spawned);
-            spawned.transform.position = Vector2.right * Random.Range(-1f, 1f) * (w / 2) + Vector2.up * Random.Range(-1f, 1f) * (h / 2);
+            spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (w / 2) + Vector2.up * Random.Range(-0.8f, 0.8f) * (h / 2);
             Vector2 direction = Random.insideUnitCircle.normalized;
             spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
         }
@@ -48,15 +48,16 @@ public class AtomSpawner : MonoBehaviour
         {
             GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Anti);
             activeAnti.Add(spawned);
-            spawned.transform.position = Vector2.right * Random.Range(-1f, 1f) * (w / 2) + Vector2.up * Random.Range(-1f, 1f) * (h / 2);
+            spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (w / 2) + Vector2.up * Random.Range(-0.8f, 0.8f) * (h / 2);
             Vector2 direction = Random.insideUnitCircle.normalized;
             spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
         }
     }
 
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, Vector3.up * h + Vector3.right * w + Vector3.forward);
     }
+#endif
 }

@@ -13,9 +13,6 @@ public class AtomMovement : MonoBehaviour
     private Collider2D coll2d = null;
     private MouseFollower amf = null;
 
-    [SerializeField]
-    private int energy = 0;
-
     /// <summary>
     /// Direccion inicial del atomo
     /// </summary>
