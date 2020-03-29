@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    private GameObject draggedAtom = null;
-
+    private bool canShoot = true;
     public float scrollScale = 0.6f;
 
+    private GameObject draggedAtom = null;
     public RayBox box;
+
+    private void Start()
+    {
+        if (box.gameObject.TryGetComponent(out BoxAtomContainer container))
+        {
+            container.onFailedIsolation.AddListener(() => canShoot = true);
+            container.onSucessfullIsolation.AddListener(() => canShoot = true);
+        }
+    }
 
     private void Update()
     {
@@ -34,14 +43,16 @@ public class PlayerInput : MonoBehaviour
             draggedAtom = null;
         }
         // Se puede repetir, bloquear
-        else if (Input.GetMouseButtonDown(1))
+        else if (Input.GetMouseButtonDown(1) && canShoot)
         {
             box.ShootBox();
+            canShoot = false;
         }
     }
 
     private void WheelInput()
     {
+        if (!canShoot) return;
         float delta = Input.mouseScrollDelta.y;
         if (delta != 0)
         {

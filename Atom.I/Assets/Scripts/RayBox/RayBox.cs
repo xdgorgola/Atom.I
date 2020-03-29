@@ -90,13 +90,14 @@ public class RayBox : MonoBehaviour
         min = -Vector2.one * halfSize;
 
         colliderContainer.localScale = ((Vector3.up + Vector3.right) * halfSize + Vector3.forward) * 2;
-        //foreach (Transform coll in walls.Select(wallColl => wallColl.transform))
-        //{
-        //    coll.localScale = Vector3.right * 0.52f + Vector3.up * (0.77f / colliderContainer.localScale.y) + Vector3.forward;
-        //}
+        foreach (Transform coll in walls.Select(wallColl => wallColl.transform))
+        {
+            // Compensacion
+            coll.localScale = Vector3.right * coll.localScale.x + Vector3.up * (3.51f / colliderContainer.localScale.y) + Vector3.forward;
+        }
         // El scale de los hijos debe de ser compensado en Y para que no aumenten su grosor.
         // dividirlo entre la escala del padre creo que seria suficiente.
-        // Colliders a 0.75 no estarian mal
+        // Colliders a 3.51f no estarian mal
     }
 
 
