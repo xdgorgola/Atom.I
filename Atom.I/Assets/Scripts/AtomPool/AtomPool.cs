@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Atoms { Hyper, Anti, Atom }
+public enum Atoms { Anti, Atom }
 public class AtomPool : MonoBehaviour
 {
     /// <summary>
@@ -15,13 +15,10 @@ public class AtomPool : MonoBehaviour
     /// </summary>
     public GameObject atomPrefab;
     public GameObject antiAtomPrefab;
-    public GameObject hyperAtomPrefab;
     public int initialAtoms = 30;
     public int initialAnti = 20;
-    public int initialHyper = 10;
     private List<GameObject> atoms;
     private List<GameObject> antiAtoms;
-    private List<GameObject> hyperAtoms;
 
     private void Awake()
     {
@@ -47,14 +44,6 @@ public class AtomPool : MonoBehaviour
             anti.SetActive(false);
             antiAtoms.Add(anti);
         }
-
-        hyperAtoms = new List<GameObject>(initialHyper);
-        for (int i = 0; i < initialHyper; i++)
-        {
-            GameObject hyper = Instantiate(hyperAtomPrefab);
-            hyper.SetActive(false);
-            hyperAtoms.Add(hyper);
-        }
     }
 
     /// <summary>
@@ -71,9 +60,6 @@ public class AtomPool : MonoBehaviour
                 break;
             case Atoms.Atom:
                 lista = atoms;
-                break;
-            case Atoms.Hyper:
-                lista = hyperAtoms;
                 break;
             default:
                 return null;
@@ -93,9 +79,6 @@ public class AtomPool : MonoBehaviour
                 break;
             case Atoms.Atom:
                 prefab = atomPrefab;
-                break;
-            case Atoms.Hyper:
-                prefab = hyperAtomPrefab;
                 break;
             default:
                 return null;

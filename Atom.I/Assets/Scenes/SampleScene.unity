@@ -1106,7 +1106,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453220267}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a536a6c5f2df97d43b8e6348f74a2314, type: 3}
   m_Name: 
@@ -1806,6 +1806,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HyperAtom
       objectReference: {fileID: 0}
+    - target: {fileID: 1173162743900055469, guid: d91ed215a83bcaf4a808a6b38eceb1c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d91ed215a83bcaf4a808a6b38eceb1c2, type: 3}
 --- !u!1001 &3158334968367000704
@@ -1875,6 +1880,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AntiAtom
       objectReference: {fileID: 0}
+    - target: {fileID: 1963234253837455893, guid: 5c681144c6b0e174a987befc4da503be,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c681144c6b0e174a987befc4da503be, type: 3}
 --- !u!1001 &3630002342359379712
@@ -1942,6 +1952,11 @@ PrefabInstance:
     - target: {fileID: 3630002341672138758, guid: db608b3409f07b64ba617a910df52052,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630002342223370353, guid: db608b3409f07b64ba617a910df52052,
+        type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

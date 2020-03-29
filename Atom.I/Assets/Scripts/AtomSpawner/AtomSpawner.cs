@@ -15,20 +15,14 @@ public class AtomSpawner : MonoBehaviour
     private int maxAnti = 30;
     [SerializeField]
     private int initialAnti = 20;
-    [SerializeField]
-    private int maxHyper = 30;
-    [SerializeField]
-    private int initialHyper = 20;
 
     private List<GameObject> activeAtoms;
     private List<GameObject> activeAnti;
-    private List<GameObject> activeHyper;
 
     private void Start()
     {
         activeAtoms = new List<GameObject>(maxAtoms);
         activeAnti = new List<GameObject>(maxAnti);
-        activeHyper = new List<GameObject>(maxHyper);
 
         // Settear la camara aca por si acaso
         //Camera.main.GetComponent<CameraSizeSetter>().SetCameraSize(10, 10);
@@ -54,15 +48,6 @@ public class AtomSpawner : MonoBehaviour
         {
             GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Anti);
             activeAnti.Add(spawned);
-            spawned.transform.position = Vector2.right * Random.Range(-1f, 1f) * (w / 2) + Vector2.up * Random.Range(-1f, 1f) * (h / 2);
-            Vector2 direction = Random.insideUnitCircle.normalized;
-            spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
-        }
-
-        for (int i = 0; i < initialHyper; i++)
-        {
-            GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Hyper);
-            activeHyper.Add(spawned);
             spawned.transform.position = Vector2.right * Random.Range(-1f, 1f) * (w / 2) + Vector2.up * Random.Range(-1f, 1f) * (h / 2);
             Vector2 direction = Random.insideUnitCircle.normalized;
             spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());

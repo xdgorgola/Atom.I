@@ -60,18 +60,25 @@ public class BoxAtomContainer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Encierra los atomos que se encuentren dentro de la caja
+    /// </summary>
     public void CaptureAtomsInBox()
     {
+        // Tamano con colliders
         Vector2 expandedTL = (Vector2)transform.position + Vector2.up * (box.max.y + 0.351f) + Vector2.right * (box.min.x - 0.351f);
         Vector2 expandedBR = (Vector2)transform.position + Vector2.up * (box.min.y - 0.351f) + Vector2.right * (box.max.x + 0.351f);
 
+        // Tamano vanilla caja
         cornerTL = (Vector2)transform.position + Vector2.up * box.max.y + Vector2.right * box.min.x;
         cornerBR = (Vector2)transform.position + Vector2.up * box.min.y + Vector2.right * box.max.x;
 
+        // Centro caja
         Vector2 center = Vector2.Lerp(cornerTL, cornerBR, 0.5f);
 
         Debug.DrawLine(expandedTL, expandedBR, Color.black, 4);
-
+        
+        // Atomos capturados
         Collider2D[] atomsCaptured = Physics2D.OverlapAreaAll(expandedTL, expandedBR);
         foreach (GameObject atom in atomsCaptured.Select(a => a.gameObject).Where(b => b.transform.childCount != 0))
         {
@@ -80,6 +87,7 @@ public class BoxAtomContainer : MonoBehaviour
             atomsInside.Add(atom);
             atom.GetComponent<AtomMovement>().onAtomDragged.AddListener(ProcessDraggedAtom);
         }
+
         atomsCount = atomsInside.Count;
         isIsolating = true;
 
