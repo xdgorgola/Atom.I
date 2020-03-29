@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AtomShaderMaterial
-  m_Shader: {fileID: 4800000, guid: bac189c3a78ebf34ebd252a59dabb17c, type: 3}
+  m_Shader: {fileID: 4800000, guid: 20c1ecfcdbb61444da9b8450e12db61f, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -65,6 +65,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Littness: 0.1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
