@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_Littness("Litness", Float) = 0.5
+		_Littness("Litness", Range(0.1,1)) = 1
 		_Color("Color", Color) = (255,0,0,0)
 	}
 		SubShader
@@ -46,7 +46,11 @@
 					float4 col = _Color;
 				
 					col *= i.diff;
-					return col * _Littness;
+
+					if (_Littness != 0) {
+               			col = col * _Littness;
+            		}
+					return col;
 				}
 			ENDCG
 			}

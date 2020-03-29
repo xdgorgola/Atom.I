@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class BlinkController : MonoBehaviour
 {
-	public float flashDuration;
+	public float flash_duration;
+    public float light_step;
 
     Renderer renderer;
 
-    private IEnumerator flashCoroutine;
+    private IEnumerator flash_coroutine;
 
 	private void Start()
 	{
@@ -16,35 +17,37 @@ public class BlinkController : MonoBehaviour
 	}
 
     private void Update() {
-		if(Input.GetKeyDown(KeyCode.Space))
-		    Flash();
+		InvokeRepeating("Flash", 0f, light_step);
 	}
 
 	private void Flash(){
-		if (flashCoroutine != null)
-		    StopCoroutine(flashCoroutine);
+		if (flash_coroutine != null)
+		    StopCoroutine(flash_coroutine);
 		
-		flashCoroutine = DoFlash();
-        StartCoroutine(flashCoroutine);
+		flash_coroutine = DoFlash();
+        StartCoroutine(flash_coroutine);
     }
 
    private IEnumerator DoFlash()
     {
-        float lerpTime = 0;
-
-        while (lerpTime < flashDuration)
+        while (true)
         {
-            lerpTime += Time.deltaTime;
-            float perc = lerpTime / flashDuration;
+            float lerp_time = 0;
 
-            SetFlashAmount(1f - perc);
-            yield return null;
+            while (lerp_time < flash_duration)
+            {
+                lerp_time += Time.deltaTime;
+                float perc = lerp_time / flash_duration;
+
+                SetFlashAmount(1f - perc);
+            }
+            SetFlashAmount(0.1f);
+            yield return new WaitForSeconds(light_step);
         }
-        SetFlashAmount(0);
     }
 	
-    private void SetFlashAmount(float flashAmount)
+    private void SetFlashAmount(float flash_amount)
     {
-        renderer.material.SetFloat("_FlashAmount", flashAmount);
+        renderer.material.SetFloat("_Littness", flash_amount);
     }
 }
