@@ -13,8 +13,14 @@ public class BoxAtomContainer : MonoBehaviour
     private Vector2 cornerTL;
     private Vector2 cornerBR;
 
+    /// <summary>
+    /// Tiempo para isolar
+    /// </summary>
    [SerializeField]
     private float isolationTime = 4f;
+    /// <summary>
+    /// Tiempo que te queda para terminar de isolar
+    /// </summary>
     private float remainingTime = 4f;
 
     /// <summary>
@@ -26,17 +32,37 @@ public class BoxAtomContainer : MonoBehaviour
     /// </summary>
     private List<GameObject> atomsInside = new List<GameObject>();
     /// <summary>
+    /// Anti Atomos dentro del cuadro de isolacion
+    /// </summary>
+    private List<GameObject> antiInside = new List<GameObject>();
+
+    /// <summary>
     /// Cantidad de atomos al momento de capturar.
     /// </summary>
     private int atomsCount = 0;
+    private int antiCount = 0;
 
+    /// <summary>
+    /// Se llama cuando falla la isolacion
+    /// </summary>
     [HideInInspector]
     public UnityEvent onFailedIsolation = new UnityEvent();
-
+   
+    /// <summary>
+    /// Se llama cuando la isolacion es exitosa
+    /// </summary>
     [HideInInspector]
     public UnityEvent onSucessfullIsolation = new UnityEvent();
 
+    /// <summary>
+    /// Se llama cuando un atomo es isolado (devuelve GameObject)
+    /// </summary>
     public AtomEvent onAtomIsolated = new AtomEvent();
+    /// <summary>
+    /// Se llama cuando un atomo malo es sacado por equivocacion de la caja
+    /// </summary>
+    public AtomEvent onWrongIsolated = new AtomEvent();
+
 
     private void Awake()
     {
@@ -65,6 +91,9 @@ public class BoxAtomContainer : MonoBehaviour
     /// </summary>
     public void CaptureAtomsInBox()
     {
+        atomsCount = 0;
+        antiCount = 0;
+
         // Tamano con colliders
         Vector2 expandedTL = (Vector2)transform.position + Vector2.up * (box.max.y + 0.351f) + Vector2.right * (box.min.x - 0.351f);
         Vector2 expandedBR = (Vector2)transform.position + Vector2.up * (box.min.y - 0.351f) + Vector2.right * (box.max.x + 0.351f);
@@ -82,68 +111,122 @@ public class BoxAtomContainer : MonoBehaviour
         Collider2D[] atomsCaptured = Physics2D.OverlapAreaAll(expandedTL, expandedBR);
         foreach (GameObject atom in atomsCaptured.Select(a => a.gameObject).Where(b => b.transform.childCount != 0))
         {
-
             if (CheckIfIsOut(atom)) atom.transform.position = center;
-            atomsInside.Add(atom);
+
             atom.GetComponent<AtomMovement>().onAtomDragged.AddListener(ProcessDraggedAtom);
+
+            if (atom.GetComponent<AtomLight>().atomKind == Atoms.Atom)
+            {
+                atomsInside.Add(atom);
+                atomsCount += 1;
+            }
+            else
+            {
+                antiInside.Add(atom);
+                antiCount += 1;
+            }
         }
 
-        atomsCount = atomsInside.Count;
         isIsolating = true;
 
-        if (atomsCount == 1) IsolateAtom();
-        else if (atomsCount == 0) FailIsolation();
+        if (antiCount == 0) FailIsolation();
+        if (atomsCount == 0) IsolateAtoms();// Isola todos, hacer metodo
     }
 
+    
+    /// <summary>
+    /// Procesa un atomo draggeado de la caja
+    /// </summary>
+    /// <param name="atom">Atomo draggeado</param>
     public void ProcessDraggedAtom(GameObject atom)
     {
         if (!atomsInside.Contains(atom) || !CheckIfIsOut(atom) || !isIsolating) return;
         Debug.Log("Lo drageaste afuera!!");
         atom.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
-        atomsInside.Remove(atom);
-        if (atomsInside.Count == 1)
+        if (atom.GetComponent<AtomLight>().atomKind == Atoms.Anti)
         {
-            Debug.Log("Lograste isolarlo!!");
-            IsolateAtom();
+            antiCount -= 1;
+            antiInside.Remove(atom);
+        }
+        else
+        {
+            onWrongIsolated.Invoke(atom);
+            atomsCount -= 1;
+            atomsInside.Remove(atom);
+        }
+
+        if (antiCount == 0)
+        {
+            FailIsolation();
+        }
+        else if (atomsCount == 0)
+        {
+            Debug.Log("Lograste isolarlos!!");
+            IsolateAtoms();
         }
     }
 
 
-    public void IsolateAtom()
+    /// <summary>
+    /// Isola todos los atomos malos de la caja
+    /// </summary>
+    public void IsolateAtoms()
     {
-        // acitvar una animacion y desactivarlo luego a la pool!
-        // Mandar como score atomsCount y remainingTime (mientras mayor sea remainingTime, mejor!)
-        // pendiente que si es 1 el atomsCount, no deberia tener tanto score
+        // Chequeo por si acaso
+        if (antiCount > 0) Debug.LogWarning("Esto esta raro");
+
+        foreach (GameObject anti in antiInside)
+        {
+            IsolateAtom(anti);
+        }
+
         remainingTime = isolationTime;
         isIsolating = false;
 
-        GameObject isolated = atomsInside[0];
-        isolated.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
-        // de mientras
-        isolated.SetActive(false);
-        atomsInside.Clear();
-
-        onAtomIsolated.Invoke(isolated);
+        antiInside.Clear();
         onSucessfullIsolation.Invoke();
     }
 
+    /// <summary>
+    /// Isola un atomo
+    /// </summary>
+    public void IsolateAtom(GameObject anti)
+    {
+        anti.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
+        // de mientras
+        anti.SetActive(false);
 
+        onAtomIsolated.Invoke(anti);
+    }
+
+    /// <summary>
+    /// Fallo de la isolacion de los atomos. Limpia las listas y resetea todo
+    /// </summary>
     public void FailIsolation()
     {
         Debug.Log("pajuo fallaste");
         remainingTime = isolationTime;
         isIsolating = false;
 
-        foreach (AtomMovement atom in atomsInside.Select(a=> a.GetComponent<AtomMovement>()))
+        foreach (AtomMovement atom in (atomsInside.Union(antiInside)).Select(a=> a.GetComponent<AtomMovement>()))
         {
             atom.onAtomDragged.RemoveListener(ProcessDraggedAtom);
         }
         atomsInside.Clear();
+        antiInside.Clear();
+
         atomsCount = 0;
+        antiCount = 0;
 
         onFailedIsolation.Invoke();
     }
 
+
+    /// <summary>
+    /// Chequea si un atomo esta fuera de la caja
+    /// </summary>
+    /// <param name="atom">Atomo a chequear posicion</param>
+    /// <returns>True si el atomo esta fuera/False en otro caso</returns>
     public bool CheckIfIsOut(GameObject atom)
     {
         Vector2 atomPos = atom.transform.position;
