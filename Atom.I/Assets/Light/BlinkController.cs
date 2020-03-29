@@ -14,10 +14,11 @@ public class BlinkController : MonoBehaviour
 	private void Start()
 	{
 		renderer = gameObject.GetComponent<Renderer>();
+        Flash();
 	}
 
     private void Update() {
-		InvokeRepeating("Flash", 0f, light_step);
+		
 	}
 
 	private void Flash(){
@@ -28,7 +29,7 @@ public class BlinkController : MonoBehaviour
         StartCoroutine(flash_coroutine);
     }
 
-   private IEnumerator DoFlash()
+    private IEnumerator DoFlash()
     {
         while (true)
         {
@@ -40,6 +41,7 @@ public class BlinkController : MonoBehaviour
                 float perc = lerp_time / flash_duration;
 
                 SetFlashAmount(1f - perc);
+                yield return null;
             }
             SetFlashAmount(0.1f);
             yield return new WaitForSeconds(light_step);
