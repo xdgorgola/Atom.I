@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
 
-public enum GameState { Starting, Playing, Paused, GameOver }
+public enum GameState { Starting, Playing, Paused, GameOver, FinishedLevel }
 public class GameManagerScript : MonoBehaviour
 {
     public static GameManagerScript Manager { get; private set; }
@@ -26,6 +26,8 @@ public class GameManagerScript : MonoBehaviour
     public UnityEvent onPause = new UnityEvent();
     [HideInInspector]
     public UnityEvent onResume = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent onGameOver = new UnityEvent();
     [HideInInspector]
     public UnityEvent onFinishedGame = new UnityEvent();
 
@@ -80,9 +82,17 @@ public class GameManagerScript : MonoBehaviour
         onResume.Invoke();
     }
 
+
+    private void FinishedLevel()
+    {
+        state = GameState.FinishedLevel;
+        onFinishedGame.Invoke();
+    }
+
+
     private void GameOver()
     {
         state = GameState.GameOver;
-        onFinishedGame.Invoke();
+        onGameOver.Invoke();
     }
 }
