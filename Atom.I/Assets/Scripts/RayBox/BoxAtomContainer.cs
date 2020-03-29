@@ -62,15 +62,21 @@ public class BoxAtomContainer : MonoBehaviour
 
     public void CaptureAtomsInBox()
     {
+        Vector2 expandedTL = (Vector2)transform.position + Vector2.up * (box.max.y + 0.351f) + Vector2.right * (box.min.x - 0.351f);
+        Vector2 expandedBR = (Vector2)transform.position + Vector2.up * (box.min.y - 0.351f) + Vector2.right * (box.max.x + 0.351f);
+
         cornerTL = (Vector2)transform.position + Vector2.up * box.max.y + Vector2.right * box.min.x;
         cornerBR = (Vector2)transform.position + Vector2.up * box.min.y + Vector2.right * box.max.x;
 
-        Debug.DrawLine(cornerTL, cornerBR, Color.black, 4);
-        Debug.Log(cornerTL);
-        Debug.Log(cornerBR);
-        Collider2D[] atomsCaptured = Physics2D.OverlapAreaAll(cornerTL, cornerBR);
+        Vector2 center = Vector2.Lerp(cornerTL, cornerBR, 0.5f);
+
+        Debug.DrawLine(expandedTL, expandedBR, Color.black, 4);
+
+        Collider2D[] atomsCaptured = Physics2D.OverlapAreaAll(expandedTL, expandedBR);
         foreach (GameObject atom in atomsCaptured.Select(a => a.gameObject).Where(b => b.transform.childCount != 0))
         {
+
+            if (CheckIfIsOut(atom)) atom.transform.position = center;
             atomsInside.Add(atom);
             atom.GetComponent<AtomMovement>().onAtomDragged.AddListener(ProcessDraggedAtom);
         }

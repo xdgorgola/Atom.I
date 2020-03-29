@@ -8,7 +8,6 @@ public class CameraSizeSetter : MonoBehaviour
     public float x = 10;
     public float y = 10;
 
-    public bool debug = true;
 
     private void Start()
     {
@@ -29,6 +28,7 @@ public class CameraSizeSetter : MonoBehaviour
         //Debug.Log(Screen.width);
         float screenRatio = (float)Screen.width / (float)Screen.height; // Que tanto X hay por cada Y actualmente
         float targetRatio = (float)x / (float)y; // Que tanto X quiero que haya por Y
+
 
         if (screenRatio >= targetRatio) // Si hay mas de lo que quiero, me asegura que alcance si seteo la Y nada mas (creo?)
         {
