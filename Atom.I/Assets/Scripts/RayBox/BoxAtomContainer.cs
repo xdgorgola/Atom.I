@@ -130,7 +130,7 @@ public class BoxAtomContainer : MonoBehaviour
         isIsolating = true;
 
         if (antiCount == 0) FailIsolation();
-        if (atomsCount == 0) IsolateAtoms();// Isola todos, hacer metodo
+        else if (atomsCount == 0) IsolateAtoms(); // Isola todos, hacer metodo
     }
 
     
@@ -140,7 +140,7 @@ public class BoxAtomContainer : MonoBehaviour
     /// <param name="atom">Atomo draggeado</param>
     public void ProcessDraggedAtom(GameObject atom)
     {
-        if (!atomsInside.Contains(atom) || !CheckIfIsOut(atom) || !isIsolating) return;
+        if ((!atomsInside.Union(antiInside).Contains(atom)) || !CheckIfIsOut(atom) || !isIsolating) return;
         Debug.Log("Lo drageaste afuera!!");
         atom.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
         if (atom.GetComponent<AtomLight>().atomKind == Atoms.Anti)
@@ -161,7 +161,6 @@ public class BoxAtomContainer : MonoBehaviour
         }
         else if (atomsCount == 0)
         {
-            Debug.Log("Lograste isolarlos!!");
             IsolateAtoms();
         }
     }
@@ -172,8 +171,9 @@ public class BoxAtomContainer : MonoBehaviour
     /// </summary>
     public void IsolateAtoms()
     {
+        Debug.Log("Lograste isolarlos!!");
         // Chequeo por si acaso
-        if (antiCount > 0) Debug.LogWarning("Esto esta raro");
+        if (atomsCount > 0) Debug.LogWarning("Esto esta raro");
 
         foreach (GameObject anti in antiInside)
         {

@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 1963234253837455895}
   - component: {fileID: 1963234253837455894}
   - component: {fileID: 1963234253837455900}
+  - component: {fileID: -2543312992190092066}
   m_Layer: 8
   m_Name: AntiAtom
   m_TagString: Atom
@@ -192,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43539db8df7670640a9310b747a3e1c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: 0
   initialDirection: {x: 1, y: 1}
   speed: 5
 --- !u!50 &1963234253837455895
@@ -245,3 +247,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 0
   isDamped: 1
+--- !u!114 &-2543312992190092066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963234253837455893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32df2c873ccd49946b4b00c5c8928496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atomKind: 0

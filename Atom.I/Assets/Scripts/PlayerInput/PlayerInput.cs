@@ -45,8 +45,9 @@ public class PlayerInput : MonoBehaviour
         // Se puede repetir, bloquear
         else if (Input.GetMouseButtonDown(1) && canShoot)
         {
-            box.ShootBox();
+            Debug.Log("cajita");
             canShoot = false;
+            box.ShootBox();
         }
     }
 
