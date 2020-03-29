@@ -57,7 +57,7 @@ public class BoxAtomContainer : MonoBehaviour
     /// <summary>
     /// Se llama cuando un atomo es isolado (devuelve GameObject)
     /// </summary>
-    public AtomEvent onAtomIsolated = new AtomEvent();
+    public AtomEvent onAntiIsolated = new AtomEvent();
     /// <summary>
     /// Se llama cuando un atomo malo es sacado por equivocacion de la caja
     /// </summary>
@@ -196,7 +196,8 @@ public class BoxAtomContainer : MonoBehaviour
         // de mientras
         anti.SetActive(false);
 
-        onAtomIsolated.Invoke(anti);
+        Debug.Log("Isolado el anti");
+        onAntiIsolated.Invoke(anti);
     }
 
     /// <summary>

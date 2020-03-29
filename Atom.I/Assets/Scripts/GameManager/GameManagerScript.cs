@@ -11,14 +11,8 @@ public class GameManagerScript : MonoBehaviour
 
     public GameState state { get; private set; } = GameState.Starting;
 
-    [HideInInspector]
-    public int level { get; private set; } = 0;
     [SerializeField]
-    [Range(1, 10)]
-    private int maxLevel = 7;
-
     private float remainingTime = 0;
-    public List<float> levelTime = new List<float>();
 
     [HideInInspector]
     public UnityEvent onGameStarted = new UnityEvent();
@@ -43,13 +37,17 @@ public class GameManagerScript : MonoBehaviour
 
     private void Start()
     {
-        level = 0;
-        remainingTime = levelTime.Sum();
+        if (AtomSpawnerCounter.Manager != null)
+        {
+            AtomSpawnerCounter.Manager.onNoMoreAnti.AddListener(FinishedLevel);
+        }
+        // para testear
+        state = GameState.Playing;
     }
 
     private void Update()
     {
-        if (remainingTime == 0)
+        if (remainingTime <= 0)
         {
             GameOver();
         }
@@ -85,6 +83,7 @@ public class GameManagerScript : MonoBehaviour
 
     private void FinishedLevel()
     {
+        Debug.Log("Juego terminado");
         state = GameState.FinishedLevel;
         onFinishedGame.Invoke();
     }

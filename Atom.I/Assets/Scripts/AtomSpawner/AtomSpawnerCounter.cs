@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class AtomSpawner : MonoBehaviour
+public class AtomSpawnerCounter : MonoBehaviour
 {
+    public static AtomSpawnerCounter Manager { get; private set; }
+
+    public BoxAtomContainer container; 
+
     private float w;
     private float h;
 
@@ -12,17 +17,32 @@ public class AtomSpawner : MonoBehaviour
     [SerializeField]
     private int initialAtoms = 30;
     [SerializeField]
-    private int maxAnti = 30;
-    [SerializeField]
-    private int initialAnti = 20;
+    private int levelAnti = 20;
 
     private List<GameObject> activeAtoms;
     private List<GameObject> activeAnti;
 
+    [HideInInspector]
+    public UnityEvent onNoMoreAnti = new UnityEvent();
+
+    private void Awake()
+    {
+        if (Manager != null && Manager != this)
+        {
+            Debug.LogWarning("Ya hay un AtomSpawnerCounter, eliminando este...", gameObject);
+        }
+        Manager = this;
+
+        if (container != null)
+        {
+            container.onAntiIsolated.AddListener((a) => ReduceAnti());
+        }
+    }
+
     private void Start()
     {
         activeAtoms = new List<GameObject>(maxAtoms);
-        activeAnti = new List<GameObject>(maxAnti);
+        activeAnti = new List<GameObject>(levelAnti);
 
         // Settear la camara aca por si acaso
         //Camera.main.GetComponent<CameraSizeSetter>().SetCameraSize(10, 10);
@@ -33,7 +53,7 @@ public class AtomSpawner : MonoBehaviour
     }
 
 
-    void InitialSpawn()
+    private void InitialSpawn()
     {
         for (int i = 0; i < initialAtoms; i++)
         {
@@ -44,7 +64,7 @@ public class AtomSpawner : MonoBehaviour
             spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
         }
 
-        for (int i = 0; i < initialAnti; i++)
+        for (int i = 0; i < levelAnti; i++)
         {
             GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Anti);
             activeAnti.Add(spawned);
@@ -53,6 +73,18 @@ public class AtomSpawner : MonoBehaviour
             spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
         }
     }
+
+    private void ReduceAnti()
+    {
+        levelAnti -= 1;
+        Debug.Log(levelAnti);
+        if (levelAnti == 0)
+        {
+            Debug.Log("No hay mas anti!");
+            onNoMoreAnti.Invoke();  
+        }
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
