@@ -1,80 +1,11 @@
 fileFormatVersion: 2
-guid: 749d1b013a01f774eaa7a66f0d0c3111
+guid: 0f967310e74d70049ae8d99e27e3d010
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: 7312618033196271681
-    second: X|NucleumAction.002
-  - first:
-      74: 3853553742589375206
-    second: X|XAction
-  - first:
-      74: 1760748595185355936
-    second: X|YAction.001
-  - first:
-      74: -512489359143372477
-    second: X|ZAction
-  - first:
-      74: -8894149096748523912
-    second: Y|NucleumAction.002
-  - first:
-      74: -7659211290644282142
-    second: Y|XAction
-  - first:
-      74: 3502276178474188205
-    second: Y|YAction.001
-  - first:
-      74: 6906243987473996674
-    second: Y|ZAction
-  - first:
-      74: 1571270625303425982
-    second: Z|NucleumAction.002
-  - first:
-      74: -1924762073042950513
-    second: Z|XAction
-  - first:
-      74: -2653998623380560564
-    second: Z|YAction.001
-  - first:
-      74: 399499287399742514
-    second: Z|ZAction
-  - first:
-      74: -2680247115567362484
-    second: Orbits|NucleumAction.002
-  - first:
-      74: -8536411123634639939
-    second: Orbits|XAction
-  - first:
-      74: -7600619991878875518
-    second: Orbits|YAction.001
-  - first:
-      74: 6072522159926099117
-    second: Orbits|ZAction
-  - first:
-      74: 7115497495176891575
-    second: Nucleum|NucleumAction.002
-  - first:
-      74: -5695722416625154588
-    second: Nucleum|XAction
-  - first:
-      74: 8268254436346123841
-    second: Nucleum|YAction.001
-  - first:
-      74: 7702006662470377398
-    second: Nucleum|ZAction
-  - first:
-      74: -2174679136043923079
-    second: Atom|NucleumAction.002
-  - first:
-      74: -1437627156032005864
-    second: Atom|XAction
-  - first:
-      74: -7174109301403973223
-    second: Atom|YAction.001
-  - first:
-      74: -7552633597472470660
-    second: Atom|ZAction
+      74: -623603649343465320
+    second: Scene
   externalObjects: {}
   materials:
     materialImportMode: 1

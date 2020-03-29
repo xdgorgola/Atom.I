@@ -1,8 +1,35 @@
 fileFormatVersion: 2
-guid: 281c5d506a2efb34a9b52529fb042efb
+guid: 6b339a4985a49a24d8494918303eab08
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 8301553831453216611
+    second: Nucleum|AtomAction
+  - first:
+      74: 5240932737384642914
+    second: Nucleum|AtomAction.001
+  - first:
+      74: -1377036838791259871
+    second: Nucleum|AtomAction.002
+  - first:
+      74: -1349940993126666388
+    second: Nucleum|NucleumAction
+  - first:
+      74: 1669414555711556460
+    second: Nucleum|NucleumAction.001
+  - first:
+      74: 7115497495176891575
+    second: Nucleum|NucleumAction.002
+  - first:
+      74: -5695722416625154588
+    second: Nucleum|XAction
+  - first:
+      74: 8268254436346123841
+    second: Nucleum|YAction.001
+  - first:
+      74: 7702006662470377398
+    second: Nucleum|ZAction
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -34,15 +61,15 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.3
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -80,7 +107,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.3
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
