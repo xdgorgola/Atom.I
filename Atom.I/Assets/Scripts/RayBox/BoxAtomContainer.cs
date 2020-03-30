@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(RayBox))]
 public class BoxAtomContainer : MonoBehaviour
 {
-    public static BoxAtomContainer Container { get; private set; }
+    public static BoxAtomContainer Container;
 
     // Componentes
     private RayBox box = null;
@@ -79,6 +79,13 @@ public class BoxAtomContainer : MonoBehaviour
 
     private void Awake()
     {
+        if (Container != null && Container != this)
+        {
+            Debug.LogWarning("Ya existe el box atom container, borrando este...", gameObject);
+            Destroy(gameObject);
+        }
+        Container = this;
+
         box = GetComponent<RayBox>();
         box.onBoxShoot.AddListener(CaptureAtomsInBox);
     }
@@ -133,11 +140,13 @@ public class BoxAtomContainer : MonoBehaviour
         Collider2D[] atomsCaptured = Physics2D.OverlapAreaAll(expandedTL, expandedBR);
         foreach (GameObject atom in atomsCaptured.Select(a => a.gameObject).Where(b => b.transform.childCount != 0))
         {
+            AtomLight light = atom.transform.GetChild(1).transform.GetChild(0).GetComponent<AtomLight>();
+
             if (CheckIfIsOut(atom)) atom.transform.position = center;
 
             atom.GetComponent<AtomMovement>().onAtomDragged.AddListener(ProcessDraggedAtom);
 
-            if (atom.GetComponent<AtomLight>().atomKind == Atoms.Atom)
+            if (light.atomKind == Atoms.Atom)
             {
                 atomsInside.Add(atom);
                 atomsCount += 1;
@@ -149,7 +158,7 @@ public class BoxAtomContainer : MonoBehaviour
             }
 
             // Le indica al atomo que se encuentra dentro de la caja
-            atom.GetComponent<AtomLight>().state = AtomState.InBox;
+            light.state = AtomState.InBox;
         }
 
         isIsolating = true;

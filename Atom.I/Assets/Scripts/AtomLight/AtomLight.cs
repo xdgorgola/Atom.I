@@ -17,14 +17,14 @@ public class AtomLight : MonoBehaviour
 
     private IEnumerator flash_coroutine;
 
-    private void awake()
+    private void Awake()
     {
-        render = gameObject.GetComponent<Renderer>();
+        render = GetComponent<Renderer>();
     }
 
 	private void Start()
 	{
-        //flash();
+        flash();
 
         BoxAtomContainer.Container.onStartIsolation.AddListener(updateInIsolation);
         BoxAtomContainer.Container.onSucessfullIsolation.AddListener(synchronicity);
@@ -33,6 +33,11 @@ public class AtomLight : MonoBehaviour
         GameManagerScript.Manager.onGameOver.AddListener(lightsOn);
         GameManagerScript.Manager.onFinishedGame.AddListener(lightsOff);
 	}
+
+    private void Update()
+    {
+        Debug.Log(state);
+    }
 
     private void updateInIsolation()
     {
