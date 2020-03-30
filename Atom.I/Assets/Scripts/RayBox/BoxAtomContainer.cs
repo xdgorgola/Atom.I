@@ -7,6 +7,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(RayBox))]
 public class BoxAtomContainer : MonoBehaviour
 {
+    public static BoxAtomContainer Container { get; private set; }
+
     // Componentes
     private RayBox box = null;
 
@@ -145,6 +147,9 @@ public class BoxAtomContainer : MonoBehaviour
                 antiInside.Add(atom);
                 antiCount += 1;
             }
+
+            // Le indica al atomo que se encuentra dentro de la caja
+            atom.GetComponent<AtomLight>().state = AtomState.InBox;
         }
 
         isIsolating = true;

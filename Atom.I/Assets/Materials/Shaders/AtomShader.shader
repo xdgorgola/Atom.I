@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_Littness("Litness", Range(0.1,1)) = 1
+		_Littness("Litness", Range(0.005,1)) = 1
 		_Color("Color", Color) = (255,0,0,0)
 	}
 		SubShader
