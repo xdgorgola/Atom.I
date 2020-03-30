@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    [SerializeField]
+    private bool paused = true;
     private bool canShoot = true;
     public float scrollScale = 0.6f;
 
@@ -12,15 +14,27 @@ public class PlayerInput : MonoBehaviour
 
     private void Start()
     {
+        if (GameManagerScript.Manager != null)
+        {
+            GameManagerScript.Manager.onPause.AddListener(() => paused = true);
+            GameManagerScript.Manager.onGameOver.AddListener(() => paused = true);
+            GameManagerScript.Manager.onFinishedGame.AddListener(() => paused = true);
+
+            GameManagerScript.Manager.onResume.AddListener(() => paused = false);
+            GameManagerScript.Manager.onGameStarted.AddListener(() => paused = false);
+        }
         if (box.gameObject.TryGetComponent(out BoxAtomContainer container))
         {
             container.onFailedIsolation.AddListener(() => canShoot = true);
             container.onSucessfullIsolation.AddListener(() => canShoot = true);
         }
+
+        paused = true;
     }
 
     private void Update()
     {
+        if (paused) return;
         ClickInput();
         WheelInput();
     }

@@ -70,6 +70,7 @@ public class GameManagerScript : MonoBehaviour
     private void PauseGame()
     {
         state = GameState.Paused;
+        Time.timeScale = 0;
         onPause.Invoke();
     }
 
@@ -77,6 +78,7 @@ public class GameManagerScript : MonoBehaviour
     private void ResumeGame()
     {
         state = GameState.Playing;
+        Time.timeScale = 1;
         onResume.Invoke();
     }
 

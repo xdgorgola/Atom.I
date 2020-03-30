@@ -10,6 +10,8 @@ public class BoxAtomContainer : MonoBehaviour
     // Componentes
     private RayBox box = null;
 
+    private bool paused = false;
+
     private Vector2 cornerTL;
     private Vector2 cornerBR;
 
@@ -81,12 +83,21 @@ public class BoxAtomContainer : MonoBehaviour
 
     private void Start()
     {
-        remainingTime = isolationTime;    
+        remainingTime = isolationTime;
+        if (GameManagerScript.Manager != null)
+        {
+            GameManagerScript.Manager.onPause.AddListener(() => paused = true);
+            GameManagerScript.Manager.onGameOver.AddListener(() => paused = true);
+            GameManagerScript.Manager.onFinishedGame.AddListener(() => paused = true);
+
+            GameManagerScript.Manager.onResume.AddListener(() => paused = false);
+            GameManagerScript.Manager.onGameStarted.AddListener(() => paused = false);
+        }
     }
 
     private void Update()
     {
-        if (!isIsolating) return;
+        if (!isIsolating || paused) return;
         if (remainingTime > 0) remainingTime -= Time.deltaTime;
         else
         {
