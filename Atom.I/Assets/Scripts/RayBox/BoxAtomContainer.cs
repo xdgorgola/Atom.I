@@ -37,10 +37,19 @@ public class BoxAtomContainer : MonoBehaviour
     private List<GameObject> antiInside = new List<GameObject>();
 
     /// <summary>
-    /// Cantidad de atomos al momento de capturar.
+    /// Cantidad de atomos al momento de capturar
     /// </summary>
     private int atomsCount = 0;
+    /// <summary>
+    /// Cantidad de anti atomos al momento de capturar
+    /// </summary>
     private int antiCount = 0;
+
+    /// <summary>
+    /// Se llama cuando se empieza exitosamente el proceso de isolacion
+    /// </summary>
+    [HideInInspector]
+    public UnityEvent onStartIsolation = new UnityEvent();
 
     /// <summary>
     /// Se llama cuando falla la isolacion
@@ -131,6 +140,7 @@ public class BoxAtomContainer : MonoBehaviour
 
         if (antiCount == 0) FailIsolation();
         else if (atomsCount == 0) IsolateAtoms(); // Isola todos, hacer metodo
+        else onStartIsolation.Invoke();
     }
 
     
