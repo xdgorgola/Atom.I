@@ -9,8 +9,8 @@ public class MouseFollower : MonoBehaviour
     [SerializeField]
     private bool isDamped = true;
     private Vector2 offset = Vector2.zero;
-
     private Vector2 dampVel = Vector2.zero;
+
 
     private void Update()
     {

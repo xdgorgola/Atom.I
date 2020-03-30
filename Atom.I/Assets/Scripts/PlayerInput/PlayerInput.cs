@@ -29,7 +29,7 @@ public class PlayerInput : MonoBehaviour
             container.onSucessfullIsolation.AddListener(() => canShoot = true);
         }
 
-        paused = true;
+        paused = false;
     }
 
     private void Update()

@@ -11,6 +11,9 @@ public class RayBox : MonoBehaviour
     private MouseFollower mf = null;
     private BoxAtomContainer ct = null;
 
+    [SerializeField]
+    private bool shooted = false;
+    private bool pausedShooted = false;
 
     /// <summary>
     /// Half Size maximo de la caja
@@ -76,6 +79,16 @@ public class RayBox : MonoBehaviour
         // Eventos para activar movimiento
         ct.onSucessfullIsolation.AddListener(ActivateMovementAgain);
         ct.onFailedIsolation.AddListener(ActivateMovementAgain);
+
+        if (GameManagerScript.Manager != null)
+        {
+            GameManagerScript.Manager.onPause.AddListener(() => DeactivateMovement());
+            GameManagerScript.Manager.onGameOver.AddListener(() => DeactivateMovement());
+            GameManagerScript.Manager.onFinishedGame.AddListener(() => DeactivateMovement());
+
+            GameManagerScript.Manager.onResume.AddListener(() => ActivateMovementAgain());
+            GameManagerScript.Manager.onGameStarted.AddListener(() => ActivateMovementAgain());
+        }
     }
 
 
@@ -104,13 +117,32 @@ public class RayBox : MonoBehaviour
     public void ShootBox()
     {
         ScaleBox(0);
+        DeactivateMovement();
+
+        shooted = true;
+        pausedShooted = false;
+
+        onBoxShoot.Invoke();
+    }
+    
+    public void DeactivateMovement()
+    {
+        if (GameManagerScript.Manager.state == GameState.Paused && shooted)
+        {
+            pausedShooted = true;
+        }
         mf.SetMFStatus(false);
         SetWallsStatus(true);
-        onBoxShoot.Invoke();
     }
 
     public void ActivateMovementAgain()
     {
+        if (pausedShooted)
+        {
+            pausedShooted = false;
+            return;
+        }
+        shooted = false;
         mf.SetMFStatus(true);
         SetWallsStatus(false);
     }
