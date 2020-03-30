@@ -591,6 +591,16 @@ PrefabInstance:
       propertyPath: container
       value: 
       objectReference: {fileID: 499578204}
+    - target: {fileID: 1967883005905359522, guid: fc27d8e8cbb82e745a53392e600e6163,
+        type: 3}
+      propertyPath: initialAtoms
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1967883005905359522, guid: fc27d8e8cbb82e745a53392e600e6163,
+        type: 3}
+      propertyPath: levelAnti
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc27d8e8cbb82e745a53392e600e6163, type: 3}
 --- !u!1001 &3355411649336299481
@@ -600,6 +610,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3355411649755396954, guid: eee5682a59a57ab4e9270291d7ffab7b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355411649969356471, guid: eee5682a59a57ab4e9270291d7ffab7b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3355411650288011946, guid: eee5682a59a57ab4e9270291d7ffab7b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -659,6 +679,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355411650510920613, guid: eee5682a59a57ab4e9270291d7ffab7b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355411650933361633, guid: eee5682a59a57ab4e9270291d7ffab7b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eee5682a59a57ab4e9270291d7ffab7b, type: 3}
