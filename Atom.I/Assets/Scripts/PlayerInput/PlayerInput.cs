@@ -41,7 +41,7 @@ public class PlayerInput : MonoBehaviour
 
     private void ClickInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !canShoot)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Solo la layer atomo
