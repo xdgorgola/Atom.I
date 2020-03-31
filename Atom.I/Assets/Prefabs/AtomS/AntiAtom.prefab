@@ -112,7 +112,6 @@ GameObject:
   - component: {fileID: 1963234253837455894}
   - component: {fileID: 1963234253837455900}
   - component: {fileID: -2543312992190092066}
-  - component: {fileID: 3115506137200076438}
   m_Layer: 8
   m_Name: AntiAtom
   m_TagString: Atom
@@ -260,17 +259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atomKind: 0
---- !u!114 &3115506137200076438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963234253837455893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3af68902cd27cce499359efc0961cc56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flash_duration: 1
-  light_step: 3
+  flash_duration: 0
+  light_step: 0
+  state: 1

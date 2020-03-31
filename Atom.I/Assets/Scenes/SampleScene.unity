@@ -669,10 +669,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6313498683642061880, guid: b5f1c8c5cabcd294bb415b5e991f907f,
+        type: 3}
+      propertyPath: x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313498683642061880, guid: b5f1c8c5cabcd294bb415b5e991f907f,
+        type: 3}
+      propertyPath: y
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6313498683642061881, guid: b5f1c8c5cabcd294bb415b5e991f907f,
         type: 3}
       propertyPath: orthographic size
-      value: 20.666666
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6313498683642061882, guid: b5f1c8c5cabcd294bb415b5e991f907f,
         type: 3}

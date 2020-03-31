@@ -46,7 +46,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.8
 --- !u!1 &6684764695215829413
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +142,7 @@ MonoBehaviour:
   atomKind: 0
   flash_duration: 1
   light_step: 1
+  state: 1
 --- !u!1 &6684764696183033981
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,9 +157,9 @@ GameObject:
   - component: {fileID: 6684764696183033976}
   - component: {fileID: 6684764696183033979}
   - component: {fileID: 6684764696183033978}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AntiAtom
-  m_TagString: Untagged
+  m_TagString: Atom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

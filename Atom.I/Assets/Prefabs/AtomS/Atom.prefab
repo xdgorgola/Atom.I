@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 3630002341672138754}
   - component: {fileID: 3630002341672138760}
   - component: {fileID: -6278791204742704367}
-  - component: {fileID: 1719381912880823401}
   m_Layer: 8
   m_Name: Atom
   m_TagString: Atom
@@ -164,20 +163,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atomKind: 1
---- !u!114 &1719381912880823401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3630002341672138753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3af68902cd27cce499359efc0961cc56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flash_duration: 1
-  light_step: 3
+  flash_duration: 0
+  light_step: 0
+  state: 1
 --- !u!1 &3630002342223370353
 GameObject:
   m_ObjectHideFlags: 0
