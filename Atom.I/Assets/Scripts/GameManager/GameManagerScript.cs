@@ -43,6 +43,7 @@ public class GameManagerScript : MonoBehaviour
         }
         // para testear
         state = GameState.Playing;
+        onGameStarted.Invoke();
     }
 
     private void Update()
