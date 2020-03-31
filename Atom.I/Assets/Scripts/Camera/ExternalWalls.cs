@@ -19,8 +19,15 @@ public class ExternalWalls : MonoBehaviour
         w = ((float)Screen.width / (float)Screen.height) * h;
 
         topWall.transform.position = Vector2.up * (h / 2 + 0.5f);
+        topWall.transform.localScale = Vector3.up + Vector3.forward + Vector3.right * w;
+
         bottomWall.transform.position = Vector2.up * (-h / 2 - 0.5f);
+        bottomWall.transform.localScale = Vector3.up + Vector3.forward + Vector3.right * w;
+
         rightWall.transform.position = Vector2.right * (w / 2 + 0.5f);
+        rightWall.transform.localScale = Vector3.up + Vector3.forward + Vector3.right * h;
+
         leftWall.transform.position = Vector2.right * (-w / 2 - 0.5f);
+        leftWall.transform.localScale = Vector3.up + Vector3.forward + Vector3.right * h;
     }
 }

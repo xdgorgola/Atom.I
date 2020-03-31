@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6684764694844763640}
   - component: {fileID: 6684764694844763641}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ClickCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 6684764695215829409}
   - component: {fileID: 6684764695215829408}
   - component: {fileID: 6684764695215829411}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6684764696558351594}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Nucleum
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -178,7 +178,7 @@ public class BoxAtomContainer : MonoBehaviour
         if ((!atomsInside.Union(antiInside).Contains(atom)) || !CheckIfIsOut(atom) || !isIsolating) return;
         Debug.Log("Lo drageaste afuera!!");
         atom.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
-        if (atom.GetComponent<AtomLight>().atomKind == Atoms.Anti)
+        if (atom.GetComponentInChildren<AtomLight>().atomKind == Atoms.Anti)
         {
             antiCount -= 1;
             antiInside.Remove(atom);

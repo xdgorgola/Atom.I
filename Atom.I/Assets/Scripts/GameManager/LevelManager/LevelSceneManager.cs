@@ -13,6 +13,7 @@ public class LevelSceneManager : MonoBehaviour
             Destroy(gameObject);
         }
         Manager = this;
+        DontDestroyOnLoad(gameObject);
     }
 
 
@@ -37,6 +38,7 @@ public class LevelSceneManager : MonoBehaviour
     /// </summary>
     public void RestartLevel()
     {
+        if (Time.timeScale == 0) Time.timeScale = 1;    
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -46,6 +48,7 @@ public class LevelSceneManager : MonoBehaviour
     /// <param name="nextScene"></param>
     public void NextLevel()
     {
+        if (Time.timeScale == 0) Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
