@@ -5,7 +5,6 @@ using UnityEngine;
 public enum AtomState { InBox, OutBox }
 public class AtomLight : MonoBehaviour
 {
-    // Public
     public Atoms atomKind = Atoms.Atom;
 	public float flash_duration;
     public float light_step;
@@ -41,15 +40,17 @@ public class AtomLight : MonoBehaviour
 
     private void updateInIsolation()
     {
+        StopCoroutine(flash_coroutine);
         if (state == AtomState.InBox) lightsOn();
         else lightsOff();
     }
 
     private void synchronicity()
     {
-        state = AtomState.OutBox;
+        StopCoroutine(flash_coroutine);
         lightsOff();
         flash();
+        state = AtomState.OutBox;
     }
 
 	private void flash()
