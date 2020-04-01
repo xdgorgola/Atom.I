@@ -22,9 +22,8 @@ public class MouseFollower : MonoBehaviour
             x = css.x;
             y = css.y;
             float quarter = Screen.height * 0.13f;
-            Debug.Log(quarter);
             yq = Camera.main.ScreenToWorldPoint(Vector3.up * quarter + Vector3.right * (Screen.width / 2)).y;
-            Debug.Log(yq);
+
         }
     }
 

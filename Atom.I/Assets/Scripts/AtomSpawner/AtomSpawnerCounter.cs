@@ -10,8 +10,9 @@ public class AtomSpawnerCounter : MonoBehaviour
 
     public BoxAtomContainer container;
 
-    private float w;
-    private float h;
+    private float x;
+    private float y;
+    private float yq;
 
     [SerializeField]
     private int maxAtoms = 40;
@@ -46,11 +47,15 @@ public class AtomSpawnerCounter : MonoBehaviour
         activeAtoms = new List<GameObject>(maxAtoms);
         activeAnti = new List<GameObject>(levelAnti);
 
-        // Settear la camara aca por si acaso
-        //Camera.main.GetComponent<CameraSizeSetter>().SetCameraSize(10, 10);
+        if (Camera.main.gameObject.TryGetComponent(out CameraSizeSetter css))
+        {
+            x = css.x;
+            y = css.y;
+            float quarter = Screen.height * 0.13f;
+            yq = Camera.main.ScreenToWorldPoint(Vector3.up * quarter + Vector3.right * (Screen.width / 2)).y;
 
-        h = Camera.main.orthographicSize * 2;
-        w = ((float)Screen.width / (float)Screen.height) * h;
+        }
+
         InitialSpawn();
     }
 
@@ -61,7 +66,7 @@ public class AtomSpawnerCounter : MonoBehaviour
         {
             GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Atom);
             activeAtoms.Add(spawned);
-            spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (w / 2) + Vector2.up * Random.Range(-0.8f, 0.8f) * (h / 2);
+            spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (x / 2) + Vector2.up * Random.Range((yq) + 0.8f, (y / 2) - 0.8f);
             Vector2 direction = Random.insideUnitCircle.normalized;
             spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
         }
@@ -70,7 +75,7 @@ public class AtomSpawnerCounter : MonoBehaviour
         {
             GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Anti);
             activeAnti.Add(spawned);
-            spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (w / 2) + Vector2.up * Random.Range(-0.8f, 0.8f) * (h / 2);
+            spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (x / 2) + Vector2.up * Random.Range((yq) + 0.8f, (y / 2) - 0.8f);
             Vector2 direction = Random.insideUnitCircle.normalized;
             spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
         }
@@ -91,7 +96,7 @@ public class AtomSpawnerCounter : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, Vector3.up * h + Vector3.right * w + Vector3.forward);
+        Gizmos.DrawWireCube(transform.position, Vector3.up * y + Vector3.right * x + Vector3.forward);
     }
 #endif
 }

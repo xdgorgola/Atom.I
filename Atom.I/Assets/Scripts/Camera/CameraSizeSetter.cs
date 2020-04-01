@@ -8,8 +8,7 @@ public class CameraSizeSetter : MonoBehaviour
     public float x = 10;
     public float y = 10;
 
-
-    private void Start()
+    private void Awake()
     {
         SetCameraSize(x, y);
     }

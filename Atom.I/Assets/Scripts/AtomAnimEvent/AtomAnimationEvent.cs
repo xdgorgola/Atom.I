@@ -15,8 +15,8 @@ public class AtomAnimationEvent : MonoBehaviour
 
     public void ShootParticles()
     {
-        inst = Instantiate(particles, transform);
-        inst.transform.SetParent(null);
+        inst = Instantiate(particles);
+        inst.transform.position = transform.position;
         Invoke("DestruirTodo", 3);
     }
 
