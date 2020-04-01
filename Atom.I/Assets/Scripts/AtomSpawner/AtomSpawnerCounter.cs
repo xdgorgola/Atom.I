@@ -33,8 +33,17 @@ public class AtomSpawnerCounter : MonoBehaviour
             Destroy(gameObject);
         }
         Manager = this;
+
+        if (Camera.main.gameObject.TryGetComponent(out CameraSizeSetter css))
+        {
+            x = css.x;
+            y = css.y;
+            yq = css.yq;
+
+        }
     }
 
+ 
     private void Start()
     {
         if (BoxManager.Container != null)
@@ -45,13 +54,7 @@ public class AtomSpawnerCounter : MonoBehaviour
         activeAtoms = new List<GameObject>(maxAtoms);
         activeAnti = new List<GameObject>(levelAnti);
 
-        if (Camera.main.gameObject.TryGetComponent(out CameraSizeSetter css))
-        {
-            x = css.x;
-            y = css.y;
-            yq = css.yq;
 
-        }
         InitialSpawn();
     }
 
