@@ -38,7 +38,7 @@ public class AtomSpawnerCounter : MonoBehaviour
 
         if (container != null)
         {
-            container.onAntiIsolated.AddListener((a) => ReduceAnti());
+            container.onAntiIsolated.AddListener(ReduceAnti);
         }
     }
 
@@ -51,11 +51,9 @@ public class AtomSpawnerCounter : MonoBehaviour
         {
             x = css.x;
             y = css.y;
-            float quarter = Screen.height * 0.13f;
-            yq = Camera.main.ScreenToWorldPoint(Vector3.up * quarter + Vector3.right * (Screen.width / 2)).y;
+            yq = css.yq;
 
         }
-
         InitialSpawn();
     }
 
@@ -64,30 +62,39 @@ public class AtomSpawnerCounter : MonoBehaviour
     {
         for (int i = 0; i < initialAtoms; i++)
         {
-            GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Atom);
-            activeAtoms.Add(spawned);
-            spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (x / 2) + Vector2.up * Random.Range((yq) + 0.8f, (y / 2) - 0.8f);
-            Vector2 direction = Random.insideUnitCircle.normalized;
-            spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
+            SpawnAtom(Atoms.Atom).GetComponent<AtomMovement>().StopMovement();
         }
 
         for (int i = 0; i < levelAnti; i++)
         {
-            GameObject spawned = AtomPool.Pool.GetAtom(Atoms.Anti);
-            activeAnti.Add(spawned);
-            spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (x / 2) + Vector2.up * Random.Range((yq) + 0.8f, (y / 2) - 0.8f);
-            Vector2 direction = Random.insideUnitCircle.normalized;
-            spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
+            SpawnAtom(Atoms.Anti).GetComponent<AtomMovement>().StopMovement();
         }
     }
 
-    private void ReduceAnti()
+    private GameObject SpawnAtom(Atoms tipo)
     {
+        GameObject spawned = AtomPool.Pool.GetAtom(tipo);
+        switch (tipo)
+        {
+            case Atoms.Anti:
+                activeAnti.Add(spawned);
+                break;
+            case Atoms.Atom:
+                activeAtoms.Add(spawned);
+                break;
+        }
+        spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (x / 2) + Vector2.up * Random.Range(-(y / 2) + 0.8f, (y / 2) - 0.8f);
+        Vector2 direction = Random.insideUnitCircle.normalized;
+        spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
+        return spawned;
+    }
+
+    private void ReduceAnti(GameObject anti)
+    {
+        activeAtoms.Remove(anti);
         levelAnti -= 1;
-        Debug.Log(levelAnti);
         if (levelAnti == 0)
         {
-            Debug.Log("No hay mas anti!");
             onNoMoreAnti.Invoke();  
         }
     }

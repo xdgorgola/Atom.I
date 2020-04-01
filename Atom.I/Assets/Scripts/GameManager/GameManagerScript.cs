@@ -49,7 +49,7 @@ public class GameManagerScript : MonoBehaviour
             AtomSpawnerCounter.Manager.onNoMoreAnti.AddListener(FinishedLevel);
         }
         // para testear
-        StartGame();
+        Invoke("StartGame", 3);
     }
 
     private void Update()
@@ -61,7 +61,6 @@ public class GameManagerScript : MonoBehaviour
                 PauseGame();
                 return;
             }
-            //remainingTime -= Time.deltaTime;
         }
         else if (state == GameState.Paused && Input.GetKeyDown(KeyCode.Escape))
         {
@@ -94,7 +93,6 @@ public class GameManagerScript : MonoBehaviour
 
     private void FinishedLevel()
     {
-        Debug.Log("Juego terminado");
         state = GameState.FinishedLevel;
         onFinishedGame.Invoke();
     }

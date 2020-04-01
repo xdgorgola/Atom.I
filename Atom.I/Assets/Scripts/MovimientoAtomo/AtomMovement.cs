@@ -13,6 +13,7 @@ public class AtomMovement : MonoBehaviour
     private Collider2D coll2d = null;
     private MouseFollower amf = null;
 
+
     /// <summary>
     /// Direccion inicial del atomo
     /// </summary>
@@ -34,6 +35,7 @@ public class AtomMovement : MonoBehaviour
 
     private void Awake()
     {
+        // Inicializando rigid body 2d
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.gravityScale = 0;
         rb2d.freezeRotation = true;
@@ -45,6 +47,8 @@ public class AtomMovement : MonoBehaviour
         coll2d.isTrigger = false;
 
         amf = GetComponent<MouseFollower>();
+
+        rb2d.velocity = initialDirection.normalized * speed;
     }
 
 
@@ -57,16 +61,36 @@ public class AtomMovement : MonoBehaviour
             SpeedManager.Manager.onStrictSpeedChange.AddListener(ChangeSpeed);
             SpeedManager.Manager.onAddSpeed.AddListener(AddSpeed);
         }
-        rb2d.velocity = initialDirection.normalized * speed;
+        if (GameManagerScript.Manager != null)
+        {
+            GameManagerScript.Manager.onGameStarted.AddListener(ResumeMovement);
+        }
     }
 
-    public void InitializeAtom(Vector2 direction, float speed)
+
+    public void InitializeAtom(Vector2 direction, float newSpeed)
     {
-        initialDirection = direction.normalized;
-        this.speed = speed;
-        rb2d.velocity = direction.normalized * speed;
         gameObject.SetActive(true);
+        initialDirection = direction.normalized;
+        speed = newSpeed;
+        rb2d.velocity = direction.normalized * newSpeed;
     }
+
+
+    public void StopMovement()
+    {
+        velocityPreDrag = rb2d.velocity;
+        speedPreDrag = speed;
+        rb2d.velocity = Vector2.zero;
+    }
+
+
+    public void ResumeMovement()
+    {
+        speed = speedPreDrag;
+        rb2d.velocity = velocityPreDrag;
+    }
+
 
     /// <summary>
     /// Cambia la rapidez totalmente del atomo
@@ -76,7 +100,6 @@ public class AtomMovement : MonoBehaviour
     {
         rb2d.velocity = rb2d.velocity.normalized * newSpeed;
         speed = newSpeed;
-        Debug.Log("New Speed: " + speed);
     }
 
 
@@ -88,7 +111,6 @@ public class AtomMovement : MonoBehaviour
     {
         rb2d.velocity = rb2d.velocity.normalized * (speed + toAdd);
         speed = speed + toAdd;
-        Debug.Log("New Speed: " + speed);
     }
 
 
@@ -115,9 +137,8 @@ public class AtomMovement : MonoBehaviour
     /// </summary>
     public void StopDragging()
     {
-        // quizas aca chequear donde lo deje!
         speed = speedPreDrag;
-        //rb2d.velocity = velocityPreDrag;
+
         // Conserva la direccion de drag del mouse
         rb2d.velocity = amf.GetDampVel().normalized * (speed);
         coll2d.enabled = true;

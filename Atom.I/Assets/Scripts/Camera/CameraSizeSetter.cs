@@ -7,10 +7,15 @@ public class CameraSizeSetter : MonoBehaviour
 {
     public float x = 10;
     public float y = 10;
+    public float yq;
 
     private void Awake()
     {
         SetCameraSize(x, y);
+        float quarter = Screen.height * 0.13f;
+        float size = Mathf.Abs((Camera.main.ScreenToWorldPoint(Vector3.up * quarter) - Camera.main.ScreenToWorldPoint(Vector3.zero)).magnitude);
+        //SetCameraSize(x, y + size);
+        yq = Camera.main.ScreenToWorldPoint(Vector3.up * quarter).y;
     }
 
     private void Update()

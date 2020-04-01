@@ -29,7 +29,7 @@ public class PlayerInput : MonoBehaviour
             container.onSucessfullIsolation.AddListener(() => canShoot = true);
         }
 
-        paused = false;
+        paused = true;
     }
 
     private void Update()
@@ -59,7 +59,6 @@ public class PlayerInput : MonoBehaviour
         // Se puede repetir, bloquear
         else if (Input.GetMouseButtonDown(1) && canShoot)
         {
-            Debug.Log("cajita");
             canShoot = false;
             box.ShootBox();
         }
