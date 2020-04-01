@@ -207,8 +207,6 @@ public class BoxAtomContainer : MonoBehaviour
     public void IsolateAtoms()
     {
         Debug.Log("Lograste isolarlos!!");
-        // Chequeo por si acaso
-        if (atomsCount > 0) Debug.LogWarning("Esto esta raro");
 
         foreach (GameObject anti in antiInside)
         {
@@ -218,7 +216,9 @@ public class BoxAtomContainer : MonoBehaviour
         remainingTime = isolationTime;
         isIsolating = false;
 
+        atomsInside.Clear();
         antiInside.Clear();
+        
         onSucessfullIsolation.Invoke();
     }
 
@@ -228,8 +228,7 @@ public class BoxAtomContainer : MonoBehaviour
     public void IsolateAtom(GameObject anti)
     {
         anti.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
-        // de mientras
-        anti.SetActive(false);
+        anti.GetComponent<AtomAnimationEvent>().ActivarMuerte();
 
         Debug.Log("Isolado el anti");
         onAntiIsolated.Invoke(anti);
