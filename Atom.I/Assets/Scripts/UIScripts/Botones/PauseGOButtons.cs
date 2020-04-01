@@ -7,6 +7,7 @@ public class PauseGOButtons : MonoBehaviour
 {
     public Button restartButton = null;
     public Button mainMenuButton = null;
+    public GameObject pan = null;
 
     public int nextLevel;
 
@@ -19,6 +20,9 @@ public class PauseGOButtons : MonoBehaviour
         }
         if (GameManagerScript.Manager != null)
         {
+            // Panel
+            GameManagerScript.Manager.onGameOver.AddListener(() => pan.SetActive(true));
+
             // Boton restart
             GameManagerScript.Manager.onGameOver.AddListener(() => restartButton.gameObject.SetActive(true));
             GameManagerScript.Manager.onPause.AddListener(() => restartButton.gameObject.SetActive(true));
@@ -32,6 +36,7 @@ public class PauseGOButtons : MonoBehaviour
 
         restartButton.gameObject.SetActive(false);
         mainMenuButton.gameObject.SetActive(false);
+        pan.SetActive(false);
 
         restartButton.onClick.AddListener(LevelSceneManager.Manager.RestartLevel);
         mainMenuButton.onClick.AddListener(LevelSceneManager.Manager.LoadMainMenu);
