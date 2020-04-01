@@ -25,9 +25,9 @@ public class AtomLight : MonoBehaviour
 	{
         flash();
 
-        BoxAtomContainer.Container.onStartIsolation.AddListener(updateInIsolation);
-        BoxAtomContainer.Container.onSucessfullIsolation.AddListener(synchronicity);
-        BoxAtomContainer.Container.onFailedIsolation.AddListener(synchronicity);
+        BoxManager.Container.onStartIsolation.AddListener(updateInIsolation);
+        BoxManager.Container.onSucessfullIsolation.AddListener(synchronicity);
+        BoxManager.Container.onFailedIsolation.AddListener(synchronicity);
 
         GameManagerScript.Manager.onGameOver.AddListener(lightsOn);
         GameManagerScript.Manager.onFinishedGame.AddListener(lightsOff);

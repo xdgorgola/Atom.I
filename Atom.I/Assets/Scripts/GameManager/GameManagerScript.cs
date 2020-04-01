@@ -48,6 +48,10 @@ public class GameManagerScript : MonoBehaviour
         {
             AtomSpawnerCounter.Manager.onNoMoreAnti.AddListener(FinishedLevel);
         }
+        if (BoxManager.Instance != null)
+        {
+            BoxManager.Life.onLifeDepleted.AddListener(GameOver);
+        }
         // para testear
         Invoke("StartGame", 3);
     }

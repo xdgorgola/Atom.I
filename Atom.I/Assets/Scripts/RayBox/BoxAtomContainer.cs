@@ -7,11 +7,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(RayBox))]
 public class BoxAtomContainer : MonoBehaviour
 {
-    public static BoxAtomContainer Container;
-
-    // Componentes
-    private RayBox box = null;
-
     private bool paused = false;
 
     private Vector2 cornerTL;
@@ -71,24 +66,7 @@ public class BoxAtomContainer : MonoBehaviour
     /// Se llama cuando un atomo es isolado (devuelve GameObject)
     /// </summary>
     public AtomEvent onAntiIsolated = new AtomEvent();
-    /// <summary>
-    /// Se llama cuando un atomo malo es sacado por equivocacion de la caja
-    /// </summary>
-    public AtomEvent onWrongIsolated = new AtomEvent();
 
-
-    private void Awake()
-    {
-        if (Container != null && Container != this)
-        {
-            Debug.LogWarning("Ya existe el box atom container, borrando este...", gameObject);
-            Destroy(gameObject);
-        }
-        Container = this;
-
-        box = GetComponent<RayBox>();
-        box.onBoxShoot.AddListener(CaptureAtomsInBox);
-    }
 
     private void Start()
     {
@@ -102,6 +80,8 @@ public class BoxAtomContainer : MonoBehaviour
             GameManagerScript.Manager.onResume.AddListener(() => paused = false);
             GameManagerScript.Manager.onGameStarted.AddListener(() => paused = false);
         }
+
+        BoxManager.Raybox.onBoxShoot.AddListener(CaptureAtomsInBox);
     }
 
     private void Update()
@@ -124,12 +104,12 @@ public class BoxAtomContainer : MonoBehaviour
         antiCount = 0;
 
         // Tamano con colliders
-        Vector2 expandedTL = (Vector2)transform.position + Vector2.up * (box.max.y + 0.351f) + Vector2.right * (box.min.x - 0.351f);
-        Vector2 expandedBR = (Vector2)transform.position + Vector2.up * (box.min.y - 0.351f) + Vector2.right * (box.max.x + 0.351f);
+        Vector2 expandedTL = (Vector2)transform.position + Vector2.up * (BoxManager.Raybox.max.y + 0.351f) + Vector2.right * (BoxManager.Raybox.min.x - 0.351f);
+        Vector2 expandedBR = (Vector2)transform.position + Vector2.up * (BoxManager.Raybox.min.y - 0.351f) + Vector2.right * (BoxManager.Raybox.max.x + 0.351f);
 
         // Tamano vanilla caja
-        cornerTL = (Vector2)transform.position + Vector2.up * box.max.y + Vector2.right * box.min.x;
-        cornerBR = (Vector2)transform.position + Vector2.up * box.min.y + Vector2.right * box.max.x;
+        cornerTL = (Vector2)transform.position + Vector2.up * BoxManager.Raybox.max.y + Vector2.right * BoxManager.Raybox.min.x;
+        cornerBR = (Vector2)transform.position + Vector2.up * BoxManager.Raybox.min.y + Vector2.right * BoxManager.Raybox.max.x;
 
         // Centro caja
         Vector2 center = Vector2.Lerp(cornerTL, cornerBR, 0.5f);
@@ -185,7 +165,6 @@ public class BoxAtomContainer : MonoBehaviour
         }
         else
         {
-            onWrongIsolated.Invoke(atom);
             atomsCount -= 1;
             atomsInside.Remove(atom);
         }

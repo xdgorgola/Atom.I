@@ -8,8 +8,6 @@ public class AtomSpawnerCounter : MonoBehaviour
 {
     public static AtomSpawnerCounter Manager { get; private set; }
 
-    public BoxAtomContainer container;
-
     private float x;
     private float y;
     private float yq;
@@ -35,15 +33,15 @@ public class AtomSpawnerCounter : MonoBehaviour
             Destroy(gameObject);
         }
         Manager = this;
-
-        if (container != null)
-        {
-            container.onAntiIsolated.AddListener(ReduceAnti);
-        }
     }
 
     private void Start()
     {
+        if (BoxManager.Container != null)
+        {
+            BoxManager.Container.onAntiIsolated.AddListener(ReduceAnti);
+        }
+
         activeAtoms = new List<GameObject>(maxAtoms);
         activeAnti = new List<GameObject>(levelAnti);
 

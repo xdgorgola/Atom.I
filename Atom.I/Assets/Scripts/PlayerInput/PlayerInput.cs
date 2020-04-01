@@ -10,7 +10,6 @@ public class PlayerInput : MonoBehaviour
     public float scrollScale = 0.6f;
 
     private GameObject draggedAtom = null;
-    public RayBox box;
 
     private void Start()
     {
@@ -23,10 +22,10 @@ public class PlayerInput : MonoBehaviour
             GameManagerScript.Manager.onResume.AddListener(() => paused = false);
             GameManagerScript.Manager.onGameStarted.AddListener(() => paused = false);
         }
-        if (box.gameObject.TryGetComponent(out BoxAtomContainer container))
+        if (BoxManager.Container != null)
         {
-            container.onFailedIsolation.AddListener(() => canShoot = true);
-            container.onSucessfullIsolation.AddListener(() => canShoot = true);
+            BoxManager.Container.onFailedIsolation.AddListener(() => canShoot = true);
+            BoxManager.Container.onSucessfullIsolation.AddListener(() => canShoot = true);
         }
 
         paused = true;
@@ -60,7 +59,7 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetMouseButtonDown(1) && canShoot)
         {
             canShoot = false;
-            box.ShootBox();
+            BoxManager.Raybox.ShootBox();
         }
     }
 
@@ -71,7 +70,7 @@ public class PlayerInput : MonoBehaviour
         if (delta != 0)
         {
             // Multiplicar por Time.deltaTime?
-            box.ScaleBox(delta * scrollScale);
+            BoxManager.Raybox.ScaleBox(delta * scrollScale);
         }
     }
 
