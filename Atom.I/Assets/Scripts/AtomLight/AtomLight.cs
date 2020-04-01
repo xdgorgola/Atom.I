@@ -23,20 +23,16 @@ public class AtomLight : MonoBehaviour
 
 	private void Start()
 	{
-        flash();
-
         BoxManager.Container.onStartIsolation.AddListener(updateInIsolation);
         BoxManager.Container.onSucessfullIsolation.AddListener(synchronicity);
         BoxManager.Container.onFailedIsolation.AddListener(synchronicity);
 
+        GameManagerScript.Manager.onGameStarted.AddListener(flash);
+        GameManagerScript.Manager.onGameOver.AddListener(() => StopCoroutine(flash_coroutine));
         GameManagerScript.Manager.onGameOver.AddListener(lightsOn);
-        GameManagerScript.Manager.onFinishedGame.AddListener(lightsOff);
+        GameManagerScript.Manager.onFinishedGame.AddListener(() => StopCoroutine(flash_coroutine));
+        GameManagerScript.Manager.onFinishedGame.AddListener(lightsOn);
 	}
-
-    private void Update()
-    {
-        Debug.Log(state);
-    }
 
     private void updateInIsolation()
     {

@@ -16,6 +16,9 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField]
     private int remainingTime = 0;
 
+    public float y = 40;
+    public float x = 40;
+
     [HideInInspector]
     public UnityEvent onGameStarted = new UnityEvent();
     [HideInInspector]
@@ -111,7 +114,7 @@ public class GameManagerScript : MonoBehaviour
     private IEnumerator GameCounter()
     {
         onCounterReduced.Invoke(remainingTime);
-        while (true)
+        while (state != GameState.FinishedLevel)
         {
             yield return new WaitForSeconds(1);
             remainingTime -= 1;

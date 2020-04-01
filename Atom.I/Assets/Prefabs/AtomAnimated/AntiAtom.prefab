@@ -140,8 +140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atomKind: 0
-  flash_duration: 0.3
-  light_step: 1
+  flash_duration: 0.5
+  light_step: 2.5
   state: 1
 --- !u!1 &6684764696183033981
 GameObject:

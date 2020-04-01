@@ -19,8 +19,8 @@ public class MouseFollower : MonoBehaviour
     {
         if (Camera.main.gameObject.TryGetComponent(out CameraSizeSetter css))
         {
-            x = css.x;
-            y = css.y;
+            x = GameManagerScript.Manager.x;
+            y = GameManagerScript.Manager.y;
             float quarter = Screen.height * 0.13f;
             yq = Camera.main.ScreenToWorldPoint(Vector3.up * quarter + Vector3.right * (Screen.width / 2)).y;
 
