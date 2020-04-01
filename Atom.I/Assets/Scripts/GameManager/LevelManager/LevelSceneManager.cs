@@ -11,6 +11,7 @@ public class LevelSceneManager : MonoBehaviour
         {
             Debug.LogWarning("Ya hay un LevenSceneManager, borrando este...", gameObject);
             Destroy(gameObject);
+            return;
         }
         Manager = this;
         DontDestroyOnLoad(gameObject);

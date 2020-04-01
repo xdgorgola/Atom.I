@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
 
+public class IntEvent : UnityEvent<int> { }
+
 public enum GameState { Starting, Playing, Paused, GameOver, FinishedLevel }
 public class GameManagerScript : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class GameManagerScript : MonoBehaviour
     public GameState state { get; private set; } = GameState.Starting;
 
     [SerializeField]
-    private float remainingTime = 0;
+    private int remainingTime = 0;
 
     [HideInInspector]
     public UnityEvent onGameStarted = new UnityEvent();
@@ -24,6 +26,10 @@ public class GameManagerScript : MonoBehaviour
     public UnityEvent onGameOver = new UnityEvent();
     [HideInInspector]
     public UnityEvent onFinishedGame = new UnityEvent();
+    [HideInInspector]
+    public IntEvent onCounterReduced = new IntEvent();
+
+    private Coroutine counterRoutine = null;
 
     private void Awake()
     {
@@ -31,6 +37,7 @@ public class GameManagerScript : MonoBehaviour
         {
             Debug.LogWarning("Ya existe el game state manager, borrando este...", gameObject);
             Destroy(gameObject);
+            return;
         }
         Manager = this;
     }
@@ -42,16 +49,11 @@ public class GameManagerScript : MonoBehaviour
             AtomSpawnerCounter.Manager.onNoMoreAnti.AddListener(FinishedLevel);
         }
         // para testear
-        state = GameState.Playing;
-        onGameStarted.Invoke();
+        StartGame();
     }
 
     private void Update()
     {
-        if (remainingTime <= 0)
-        {
-            GameOver();
-        }
         if (state == GameState.Playing)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -59,7 +61,7 @@ public class GameManagerScript : MonoBehaviour
                 PauseGame();
                 return;
             }
-            remainingTime -= Time.deltaTime;
+            //remainingTime -= Time.deltaTime;
         }
         else if (state == GameState.Paused && Input.GetKeyDown(KeyCode.Escape))
         {
@@ -67,6 +69,12 @@ public class GameManagerScript : MonoBehaviour
         }
     }
     
+    private void StartGame()
+    {
+        state = GameState.Playing;
+        counterRoutine = StartCoroutine(GameCounter());
+        onGameStarted.Invoke();
+    }
 
     private void PauseGame()
     {
@@ -96,5 +104,21 @@ public class GameManagerScript : MonoBehaviour
     {
         state = GameState.GameOver;
         onGameOver.Invoke();
+    }
+
+    private IEnumerator GameCounter()
+    {
+        onCounterReduced.Invoke(remainingTime);
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            remainingTime -= 1;
+            onCounterReduced.Invoke(remainingTime);
+            if (remainingTime <= 0 && state != GameState.FinishedLevel)
+            {
+                GameOver();
+                StopCoroutine(counterRoutine);
+            }
+        }
     }
 }
