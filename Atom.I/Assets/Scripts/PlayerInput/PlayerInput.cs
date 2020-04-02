@@ -25,6 +25,7 @@ public class PlayerInput : MonoBehaviour
         if (BoxManager.Container != null)
         {
             BoxManager.Container.onFailedIsolation.AddListener(() => canShoot = true);
+            BoxManager.Container.onFailedIsolation.AddListener(StopDrag);
             BoxManager.Container.onSucessfullIsolation.AddListener(() => canShoot = true);
         }
 
@@ -52,8 +53,7 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0) && draggedAtom != null)
         {
-            draggedAtom.GetComponent<AtomMovement>().StopDragging();
-            draggedAtom = null;
+            StopDrag();
         }
         // Se puede repetir, bloquear
         else if (Input.GetMouseButtonDown(1) && canShoot)
@@ -84,5 +84,12 @@ public class PlayerInput : MonoBehaviour
         draggedAtom = clicked;
         AtomMovement aMov = clicked.GetComponent<AtomMovement>();
         aMov.StartDragging();
+    }
+
+    private void StopDrag()
+    {
+        if (draggedAtom == null) return;
+        draggedAtom.GetComponent<AtomMovement>().StopDragging();
+        draggedAtom = null;
     }
 }

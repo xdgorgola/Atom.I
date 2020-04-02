@@ -756,6 +756,21 @@ PrefabInstance:
       propertyPath: x
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 1967883005905359522, guid: fc27d8e8cbb82e745a53392e600e6163,
+        type: 3}
+      propertyPath: initialAtoms
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1967883005905359522, guid: fc27d8e8cbb82e745a53392e600e6163,
+        type: 3}
+      propertyPath: levelAnti
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1967883006042344036, guid: fc27d8e8cbb82e745a53392e600e6163,
+        type: 3}
+      propertyPath: speedRangeMax
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc27d8e8cbb82e745a53392e600e6163, type: 3}
 --- !u!1001 &3355411649336299481
