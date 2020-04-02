@@ -26,6 +26,8 @@ public class CounterUI : MonoBehaviour
     private void UpdateCounter(int time)
     {
         int minutes = time / 60;
-        counterText.text = minutes + ":" + (time - minutes * 60); 
+        int seconds = time - minutes * 60;
+        string xd = (seconds < 10 ? "0" + seconds : seconds.ToString());
+        counterText.text = minutes + ":" + xd; 
     }
 }

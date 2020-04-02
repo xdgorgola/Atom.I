@@ -744,7 +744,7 @@ PrefabInstance:
     - target: {fileID: 1967883005509585825, guid: fc27d8e8cbb82e745a53392e600e6163,
         type: 3}
       propertyPath: remainingTime
-      value: 5
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1967883005509585825, guid: fc27d8e8cbb82e745a53392e600e6163,
         type: 3}
@@ -847,22 +847,27 @@ PrefabInstance:
     - target: {fileID: 6313498683642061881, guid: b5f1c8c5cabcd294bb415b5e991f907f,
         type: 3}
       propertyPath: orthographic size
-      value: 10.394659
+      value: 6.3
       objectReference: {fileID: 0}
     - target: {fileID: 6313498683642061881, guid: b5f1c8c5cabcd294bb415b5e991f907f,
         type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0
+      value: 0.03137255
       objectReference: {fileID: 0}
     - target: {fileID: 6313498683642061881, guid: b5f1c8c5cabcd294bb415b5e991f907f,
         type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 0
+      value: 0.03137255
       objectReference: {fileID: 0}
     - target: {fileID: 6313498683642061881, guid: b5f1c8c5cabcd294bb415b5e991f907f,
         type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0
+      value: 0.03137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313498683642061881, guid: b5f1c8c5cabcd294bb415b5e991f907f,
+        type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6313498683642061882, guid: b5f1c8c5cabcd294bb415b5e991f907f,
         type: 3}

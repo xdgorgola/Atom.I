@@ -28,6 +28,9 @@ public class AtomMovement : MonoBehaviour
     private Vector2 velocityPreDrag;
     private float speedPreDrag = 5f;
 
+    [SerializeField]
+    private float randomTime = 4;
+
     public AtomEvent onAtomDragged = new AtomEvent();
 
     //19-21 de speed ya es fastidioso :(
@@ -64,6 +67,7 @@ public class AtomMovement : MonoBehaviour
         if (GameManagerScript.Manager != null)
         {
             GameManagerScript.Manager.onGameStarted.AddListener(ResumeMovement);
+            Invoke("StartRandom", GameManagerScript.Manager.startTime);
         }
     }
 
@@ -124,9 +128,10 @@ public class AtomMovement : MonoBehaviour
         velocityPreDrag = rb2d.velocity;
         speed = 0;
         rb2d.velocity = Vector2.zero;
+        
+        // Desctivamos la simulacion fisica del atomo
         coll2d.enabled = false;
         rb2d.simulated = false;
-
         amf.SetMFStatus(true);
     }
 
@@ -141,11 +146,29 @@ public class AtomMovement : MonoBehaviour
 
         // Conserva la direccion de drag del mouse
         rb2d.velocity = amf.GetDampVel().normalized * (speed);
+
+        // Desactivamos el arraste
         coll2d.enabled = true;
         rb2d.simulated = true;
-
         amf.SetMFStatus(false);
 
         onAtomDragged.Invoke(gameObject);
+    }
+
+    public void StartRandom()
+    {
+        StartCoroutine(RandomDirectionRoutine());
+    }
+    public IEnumerator RandomDirectionRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(randomTime);
+            rb2d.velocity = Random.insideUnitCircle.normalized * speed;
+            //if (0.25f >= Random.Range(0f, 1f))
+            //{
+            //    rb2d.AddForce((rb2d))
+            //}
+        }
     }
 }

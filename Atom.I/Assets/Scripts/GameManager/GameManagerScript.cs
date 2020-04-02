@@ -13,6 +13,7 @@ public class GameManagerScript : MonoBehaviour
 
     public GameState state { get; private set; } = GameState.Starting;
 
+    public float startTime = 3;
     [SerializeField]
     private int remainingTime = 0;
 
@@ -56,7 +57,8 @@ public class GameManagerScript : MonoBehaviour
             BoxManager.Life.onLifeDepleted.AddListener(GameOver);
         }
         // para testear
-        Invoke("StartGame", 3);
+        onCounterReduced.Invoke(remainingTime);
+        Invoke("StartGame", startTime);
     }
 
     private void Update()
