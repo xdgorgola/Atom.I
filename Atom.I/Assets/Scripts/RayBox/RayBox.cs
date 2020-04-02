@@ -89,6 +89,8 @@ public class RayBox : MonoBehaviour
             GameManagerScript.Manager.onResume.AddListener(() => ActivateMovementAgain());
             GameManagerScript.Manager.onGameStarted.AddListener(() => ActivateMovementAgain());
         }
+
+        ScaleBox(0);
     }
 
 
