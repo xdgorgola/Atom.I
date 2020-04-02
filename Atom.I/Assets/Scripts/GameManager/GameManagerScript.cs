@@ -13,8 +13,12 @@ public class GameManagerScript : MonoBehaviour
 
     public GameState state { get; private set; } = GameState.Starting;
 
+    public float startTime = 3;
     [SerializeField]
     private int remainingTime = 0;
+
+    public float y = 40;
+    public float x = 40;
 
     [HideInInspector]
     public UnityEvent onGameStarted = new UnityEvent();
@@ -53,7 +57,8 @@ public class GameManagerScript : MonoBehaviour
             BoxManager.Life.onLifeDepleted.AddListener(GameOver);
         }
         // para testear
-        Invoke("StartGame", 3);
+        onCounterReduced.Invoke(remainingTime);
+        Invoke("StartGame", startTime);
     }
 
     private void Update()
@@ -111,7 +116,7 @@ public class GameManagerScript : MonoBehaviour
     private IEnumerator GameCounter()
     {
         onCounterReduced.Invoke(remainingTime);
-        while (true)
+        while (state != GameState.FinishedLevel)
         {
             yield return new WaitForSeconds(1);
             remainingTime -= 1;

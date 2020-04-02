@@ -113,8 +113,6 @@ public class BoxAtomContainer : MonoBehaviour
 
         // Centro caja
         Vector2 center = Vector2.Lerp(cornerTL, cornerBR, 0.5f);
-
-        Debug.DrawLine(expandedTL, expandedBR, Color.black, 4);
         
         // Atomos capturados
         Collider2D[] atomsCaptured = Physics2D.OverlapAreaAll(expandedTL, expandedBR);

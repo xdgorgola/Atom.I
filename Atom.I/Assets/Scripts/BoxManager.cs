@@ -28,9 +28,9 @@ public class BoxManager : MonoBehaviour
     }
 
     [SerializeField]
-    private GameObject player;
+    private GameObject player = null;
     [SerializeField]
-    private GameObject box;
+    private GameObject box = null;
 
     private RayBox rayBox;
     private BoxAtomContainer container;

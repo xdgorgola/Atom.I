@@ -8,8 +8,8 @@ public class AtomSpawnerCounter : MonoBehaviour
 {
     public static AtomSpawnerCounter Manager { get; private set; }
 
-    private float x;
-    private float y;
+    private float spawnX;
+    private float spawnY;
     private float yq;
 
     [SerializeField]
@@ -35,8 +35,15 @@ public class AtomSpawnerCounter : MonoBehaviour
         Manager = this;
     }
 
+ 
     private void Start()
     {
+        if (GameManagerScript.Manager != null)
+        {
+            spawnX = GameManagerScript.Manager.x;
+            spawnY = GameManagerScript.Manager.y;
+        }
+
         if (BoxManager.Container != null)
         {
             BoxManager.Container.onAntiIsolated.AddListener(ReduceAnti);
@@ -45,13 +52,7 @@ public class AtomSpawnerCounter : MonoBehaviour
         activeAtoms = new List<GameObject>(maxAtoms);
         activeAnti = new List<GameObject>(levelAnti);
 
-        if (Camera.main.gameObject.TryGetComponent(out CameraSizeSetter css))
-        {
-            x = css.x;
-            y = css.y;
-            yq = css.yq;
 
-        }
         InitialSpawn();
     }
 
@@ -81,7 +82,7 @@ public class AtomSpawnerCounter : MonoBehaviour
                 activeAtoms.Add(spawned);
                 break;
         }
-        spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (x / 2) + Vector2.up * Random.Range(-(y / 2) + 0.8f, (y / 2) - 0.8f);
+        spawned.transform.position = Vector2.right * Random.Range(-0.8f, 0.8f) * (spawnX / 2) + Vector2.up * Random.Range(-(spawnY / 2) + 0.8f, (spawnY / 2) - 0.8f);
         Vector2 direction = Random.insideUnitCircle.normalized;
         spawned.GetComponent<AtomMovement>().InitializeAtom(direction, SpeedManager.Manager.GetSpeedRange());
         return spawned;
@@ -101,7 +102,7 @@ public class AtomSpawnerCounter : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, Vector3.up * y + Vector3.right * x + Vector3.forward);
+        Gizmos.DrawWireCube(transform.position, Vector3.up * spawnY + Vector3.right * spawnX + Vector3.forward);
     }
 #endif
 }

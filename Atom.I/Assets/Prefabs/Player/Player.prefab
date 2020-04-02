@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1643298384443478362}
   - component: {fileID: 1643298384443478361}
+  - component: {fileID: 1753890035}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -43,5 +44,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329cc19799e147747bfc72034513c9d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paused: 1
   scrollScale: 0.4
-  box: {fileID: 0}
+--- !u!114 &1753890035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643298384443478360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc0c030edb5a7a46ba05a921a538d82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onLifeChange:
+    m_PersistentCalls:
+      m_Calls: []
+  onLifeDepleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
