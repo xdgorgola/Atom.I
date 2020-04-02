@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class LifeSystem : MonoBehaviour
 {
     [SerializeField]
-    private int hp = 3;
+    private int hp = 4;
 
     public UnityEvent onLifeChange = new UnityEvent();
     public UnityEvent onLifeDepleted = new UnityEvent();
