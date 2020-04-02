@@ -14,7 +14,7 @@ public class LevelSceneManager : MonoBehaviour
             return;
         }
         Manager = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
 
