@@ -902,6 +902,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box
       objectReference: {fileID: 0}
+    - target: {fileID: 5377932518283287624, guid: eee5682a59a57ab4e9270291d7ffab7b,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 6313498683343379527}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eee5682a59a57ab4e9270291d7ffab7b, type: 3}
 --- !u!1001 &6313498683343379526
@@ -1008,3 +1013,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f1c8c5cabcd294bb415b5e991f907f, type: 3}
+--- !u!20 &6313498683343379527 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6313498683642061881, guid: b5f1c8c5cabcd294bb415b5e991f907f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6313498683343379526}
+  m_PrefabAsset: {fileID: 0}
