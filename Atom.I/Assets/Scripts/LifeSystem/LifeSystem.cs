@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class LifeSystem : MonoBehaviour
 {
+    [SerializeField]
     private int hp = 3;
 
     public UnityEvent onLifeChange = new UnityEvent();
