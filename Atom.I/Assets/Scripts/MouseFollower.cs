@@ -35,8 +35,8 @@ public class MouseFollower : MonoBehaviour
         if (isDamped) final = Vector2.SmoothDamp(transform.position, target, ref dampVel, 0.08f);
         else final = target;
 
-        final.x = Mathf.Clamp(final.x, -x / 2 + 0.5f, x / 2 - 0.5f);
-        final.y = Mathf.Clamp(final.y, yq + 0.5f, y / 2 - 0.5f);
+        final.x = Mathf.Clamp(final.x, -x / 2 + 1f, x / 2 - 1f);
+        final.y = Mathf.Clamp(final.y, (-y / 2) + 1f, y / 2 - 1f);
         transform.position = final;
     }
 

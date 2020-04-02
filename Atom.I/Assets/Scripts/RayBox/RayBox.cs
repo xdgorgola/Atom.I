@@ -106,7 +106,7 @@ public class RayBox : MonoBehaviour
         foreach (Transform coll in walls.Select(wallColl => wallColl.transform))
         {
             // Compensacion
-            coll.localScale = Vector3.right * coll.localScale.x + Vector3.up * (3.51f / colliderContainer.localScale.y) + Vector3.forward;
+            coll.localScale = Vector3.right * .65f + Vector3.up * (1f / colliderContainer.localScale.y) + Vector3.forward;
         }
         // El scale de los hijos debe de ser compensado en Y para que no aumenten su grosor.
         // dividirlo entre la escala del padre creo que seria suficiente.

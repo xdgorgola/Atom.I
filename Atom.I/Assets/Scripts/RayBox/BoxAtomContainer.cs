@@ -154,7 +154,6 @@ public class BoxAtomContainer : MonoBehaviour
     public void ProcessDraggedAtom(GameObject atom)
     {
         if ((!atomsInside.Union(antiInside).Contains(atom)) || !CheckIfIsOut(atom) || !isIsolating) return;
-        Debug.Log("Lo drageaste afuera!!");
         atom.GetComponent<AtomMovement>().onAtomDragged.RemoveListener(ProcessDraggedAtom);
         if (atom.GetComponentInChildren<AtomLight>().atomKind == Atoms.Anti)
         {
