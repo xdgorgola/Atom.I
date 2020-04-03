@@ -12,6 +12,7 @@ public class BaseAudio : MonoBehaviour
         gameObject.AddComponent<AudioSource>();
 
         audioSource.loop = true;
+        audioSource.volume = 0.1f;
         audioSource.clip = clik;
 
         GameManagerScript.Manager.onGameStarted.AddListener(() => clikSound());
